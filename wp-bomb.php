@@ -30,7 +30,7 @@ function bomb_log( $log ) {
 	}
 }
 
-function bomb_auto_thumbs( $items=array(), $types=array('post'), $min=0, $max=0 ){
+function bomb_auto_thumbs( $min=0, $max=0, $items=array(), $types=array('post') ){
 	if( $min && $max ){
 		$items = array();
 		for( $i=$min; $i<=$max; $i++ ){
