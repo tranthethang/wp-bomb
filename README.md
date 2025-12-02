@@ -1,3 +1,5 @@
+![WP Bomb](./assets/repo.png)
+
 # WP Bomb
 
 A comprehensive WordPress utility plugin for developers. WP Bomb provides essential developer tools to automate common tasks directly from the WordPress admin panel.
