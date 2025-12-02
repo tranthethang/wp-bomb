@@ -1,0 +1,19 @@
+{
+  "name": "tranthethang/wp-bomb",
+  "description": "Tons of utility for WordPress developers.",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Tran The Thang",
+      "homepage": "https://github.com/tranthethang"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "WpBomb\\": "app/"
+    }
+  }
+}
