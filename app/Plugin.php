@@ -31,5 +31,8 @@ class Plugin {
 		if ( isset( $_POST['bomb_execute_thumbs'] ) ) {
 			DevTools::process_auto_thumbs_form();
 		}
+		if ( isset( $_POST['bomb_execute_regenerate_thumbs'] ) ) {
+			DevTools::process_regenerate_thumbs_form();
+		}
 	}
 }

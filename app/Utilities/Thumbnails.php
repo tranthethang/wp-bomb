@@ -120,4 +120,49 @@ class Thumbnails {
 
 		wp_reset_postdata();
 	}
+
+	public static function regenerate_thumbnails() {
+		$attachments = get_posts(
+			array(
+				'post_type'      => 'attachment',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			)
+		);
+
+		$count = 0;
+
+		foreach ( $attachments as $attachment_id ) {
+			$file = get_attached_file( $attachment_id );
+			if ( ! $file || ! file_exists( $file ) ) {
+				continue;
+			}
+
+			$metadata = wp_get_attachment_metadata( $attachment_id );
+			if ( ! $metadata ) {
+				continue;
+			}
+
+			if ( isset( $metadata['sizes'] ) && is_array( $metadata['sizes'] ) ) {
+				foreach ( $metadata['sizes'] as $size => $size_data ) {
+					if ( isset( $size_data['file'] ) ) {
+						$file_path = trailingslashit( dirname( $file ) ) . $size_data['file'];
+						if ( file_exists( $file_path ) ) {
+							@unlink( $file_path );
+						}
+					}
+				}
+
+				$metadata['sizes'] = array();
+			}
+
+			$new_metadata = wp_generate_attachment_metadata( $attachment_id, $file );
+			if ( $new_metadata ) {
+				wp_update_attachment_metadata( $attachment_id, $new_metadata );
+				$count++;
+			}
+		}
+
+		return $count;
+	}
 }
