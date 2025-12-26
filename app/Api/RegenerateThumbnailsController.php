@@ -34,6 +34,23 @@ class RegenerateThumbnailsController {
 
 		\register_rest_route(
 			'wpbomb/v1',
+			'/regenerate-thumbnails/batch-process',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'process_batch_multiple' ),
+				'permission_callback' => array( $this, 'check_permission' ),
+				'args'                => array(
+					'attachment_ids' => array(
+						'type'     => 'array',
+						'items'    => array( 'type' => 'integer' ),
+						'required' => true,
+					),
+				),
+			)
+		);
+
+		\register_rest_route(
+			'wpbomb/v1',
 			'/regenerate-thumbnails/status',
 			array(
 				'methods'             => 'GET',
@@ -86,6 +103,31 @@ class RegenerateThumbnailsController {
 			array(
 				'success' => true,
 				'result'  => $result,
+			)
+		);
+	}
+
+	public function process_batch_multiple( \WP_REST_Request $request ) {
+		$attachment_ids = $request->get_param( 'attachment_ids' );
+
+		if ( ! is_array( $attachment_ids ) || empty( $attachment_ids ) ) {
+			return new \WP_REST_Response(
+				array(
+					'success' => false,
+					'message' => 'Invalid or missing attachment IDs',
+				),
+				400
+			);
+		}
+
+		$attachment_ids = array_filter( array_map( 'intval', $attachment_ids ) );
+
+		$results = BatchProcessor::process_batch_optimized( $attachment_ids );
+
+		return new \WP_REST_Response(
+			array(
+				'success' => true,
+				'results' => $results,
 			)
 		);
 	}

@@ -63,8 +63,9 @@ class Plugin {
 			'wp-bomb-regenerate-thumbnails',
 			'wpBombData',
 			array(
-				'nonce' => \wp_create_nonce( 'wp_rest' ),
-				'rest_url' => \rest_url(),
+				'nonce'      => \wp_create_nonce( 'wp_rest' ),
+				'rest_url'   => \rest_url(),
+				'batch_size' => (int) \apply_filters( 'wpbomb_thumbnail_batch_size', 8 ),
 			)
 		);
 

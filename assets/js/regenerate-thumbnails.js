@@ -1,9 +1,12 @@
-const { useState, useEffect, useRef } = wp.element;
+const { useState, useEffect, useRef, useCallback } = wp.element;
 const { render } = wp.element;
 const apiFetch = wp.apiFetch;
 const e = wp.element.createElement;
 
 const RegenerateThumbnailsApp = () => {
+	const BATCH_SIZE = wpBombData.batch_size || 8;
+	const UPDATE_DEBOUNCE_MS = 100;
+
 	const [status, setStatus] = useState('idle');
 	const [totalAttachments, setTotalAttachments] = useState(0);
 	const [attachmentIds, setAttachmentIds] = useState([]);
@@ -15,11 +18,40 @@ const RegenerateThumbnailsApp = () => {
 	const [errorLog, setErrorLog] = useState([]);
 	const [lastError, setLastError] = useState(null);
 	const isMountedRef = useRef(true);
+	const debounceTimerRef = useRef(null);
+	const pendingUpdatesRef = useRef({});
 
 	useEffect(() => {
 		return () => {
 			isMountedRef.current = false;
+			if (debounceTimerRef.current) {
+				clearTimeout(debounceTimerRef.current);
+			}
 		};
+	}, []);
+
+	const debouncedStateUpdate = useCallback((updates) => {
+		Object.assign(pendingUpdatesRef.current, updates);
+
+		if (debounceTimerRef.current) {
+			clearTimeout(debounceTimerRef.current);
+		}
+
+		debounceTimerRef.current = setTimeout(() => {
+			if (!isMountedRef.current) return;
+
+			const updates = pendingUpdatesRef.current;
+			pendingUpdatesRef.current = {};
+
+			if (updates.status !== undefined) setStatus(updates.status);
+			if (updates.processedCount !== undefined) setProcessedCount(updates.processedCount);
+			if (updates.failedCount !== undefined) setFailedCount(updates.failedCount);
+			if (updates.completedCount !== undefined) setCompletedCount(updates.completedCount);
+			if (updates.currentBatchIndex !== undefined) setCurrentBatchIndex(updates.currentBatchIndex);
+			if (updates.results !== undefined) setResults(updates.results);
+			if (updates.lastError !== undefined) setLastError(updates.lastError);
+			if (updates.errorLog !== undefined) setErrorLog(updates.errorLog);
+		}, UPDATE_DEBOUNCE_MS);
 	}, []);
 
 	const handleStart = async () => {
@@ -51,7 +83,7 @@ const RegenerateThumbnailsApp = () => {
 			setTotalAttachments(response.total);
 			setAttachmentIds(response.attachment_ids);
 			setStatus('processing');
-			processNextBatch(response.attachment_ids, 0, {});
+			processBatches(response.attachment_ids, 0, {});
 		} catch (error) {
 			if (isMountedRef.current) {
 				setLastError(error.message || 'Failed to fetch attachments');
@@ -60,67 +92,73 @@ const RegenerateThumbnailsApp = () => {
 		}
 	};
 
-	const processNextBatch = async (allIds, currentIndex, currentResults) => {
+	const processBatches = async (allIds, currentIndex, currentResults) => {
 		if (!isMountedRef.current) return;
 
 		if (currentIndex >= allIds.length) {
 			const failed = Object.values(currentResults).filter(r => !r.success).length;
 			const completed = Object.values(currentResults).filter(r => r.success).length;
-			
-			if (isMountedRef.current) {
-				setCompletedCount(completed);
-				setFailedCount(failed);
-				setStatus('completed');
-			}
+
+			debouncedStateUpdate({
+				completedCount: completed,
+				failedCount: failed,
+				status: 'completed',
+			});
 			return;
 		}
 
-		const attachmentId = allIds[currentIndex];
+		const batchIds = allIds.slice(currentIndex, currentIndex + BATCH_SIZE);
 
 		try {
-			const requestData = {
-				attachment_id: attachmentId,
-			};
-
 			const response = await apiFetch({
-				path: '/wpbomb/v1/regenerate-thumbnails/batch',
+				path: '/wpbomb/v1/regenerate-thumbnails/batch-process',
 				method: 'POST',
 				headers: {
 					'X-WP-Nonce': wpBombData.nonce,
 					'Content-Type': 'application/json',
 				},
-				data: requestData,
+				data: {
+					attachment_ids: batchIds,
+				},
 			});
 
 			if (!isMountedRef.current) return;
 
-			const resultData = response.result || {
-				success: false,
-				error: 'No result returned from server',
-			};
-			const newResults = { ...currentResults, [attachmentId]: resultData };
+			const batchResults = response.results || {};
+			const newResults = { ...currentResults, ...batchResults };
+
 			const failed = Object.values(newResults).filter(r => !r.success).length;
 			const completed = Object.values(newResults).filter(r => r.success).length;
 			const processed = Object.keys(newResults).length;
+			const newErrors = Object.entries(batchResults)
+				.filter(([_, result]) => !result.success)
+				.map(([id, result]) => `ID ${id}: ${result.error || 'Unknown error'}`);
 
-			setResults(newResults);
-			setProcessedCount(processed);
-			setFailedCount(failed);
-			setCompletedCount(completed);
-			setCurrentBatchIndex(currentIndex + 1);
+			const updates = {
+				results: newResults,
+				processedCount: processed,
+				failedCount: failed,
+				completedCount: completed,
+				currentBatchIndex: currentIndex + BATCH_SIZE,
+			};
 
-			if (!resultData.success) {
-				const errorMsg = `ID ${attachmentId}: ${resultData.error || 'Unknown error'}`;
-				setErrorLog(prev => [errorMsg, ...prev]);
+			if (newErrors.length > 0) {
+				setErrorLog(prev => [...newErrors, ...prev]);
 			}
 
-			processNextBatch(allIds, currentIndex + 1, newResults);
+			debouncedStateUpdate(updates);
+
+			await new Promise(resolve => setTimeout(resolve, 50));
+
+			processBatches(allIds, currentIndex + BATCH_SIZE, newResults);
 		} catch (error) {
 			if (isMountedRef.current) {
-				const errorMsg = `ID ${attachmentId} failed: ${error.message || JSON.stringify(error)}`;
+				const errorMsg = `Batch failed (IDs ${batchIds[0]}-${batchIds[batchIds.length - 1]}): ${error.message || JSON.stringify(error)}`;
 				setErrorLog(prev => [errorMsg, ...prev]);
-				setLastError(errorMsg);
-				setStatus('paused');
+				debouncedStateUpdate({
+					lastError: errorMsg,
+					status: 'paused',
+				});
 			}
 		}
 	};
@@ -129,7 +167,7 @@ const RegenerateThumbnailsApp = () => {
 		if (attachmentIds.length > 0) {
 			setStatus('processing');
 			setLastError(null);
-			processNextBatch(attachmentIds, currentBatchIndex, results);
+			processBatches(attachmentIds, currentBatchIndex, results);
 		}
 	};
 
