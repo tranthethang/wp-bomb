@@ -3,7 +3,7 @@
  * Plugin Name: WP Bomb
  * Plugin URI: https://github.com/tranthethang/WP-Bomb
  * Description: A comprehensive WordPress utility plugin for developers. Features include automated thumbnail attachment, post field/meta cloning, and term management. Access all tools from Tools → Dev Tools menu. Built with OOP architecture and PSR-4 autoloading.
- * Version: 1.0
+ * Version: 1.0.1
  * Author: tranthethang
  * Author URI: https://github.com/tranthethang
  * License: GNU General Public License v3 or later
