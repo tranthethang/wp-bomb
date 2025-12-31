@@ -5,7 +5,6 @@ import {
 	TextControl,
 	Notice,
 	Spinner,
-	ExternalLink,
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';

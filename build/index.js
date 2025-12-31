@@ -687,10 +687,10 @@ const App = () => {
     className: "text-sm text-wp-text leading-relaxed"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Make sure to backup your database before running bulk operations.', 'craftsman-suite')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_AutoAttachThumbnail__WEBPACK_IMPORTED_MODULE_2__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_RegenerateThumbnails__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("footer", {
     className: "mt-12 pt-6 border-t border-wp-border flex justify-between items-center text-xs text-wp-sub"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Thank you for creating with ', 'craftsman-suite'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Powered by passion and lots of coffee. ', 'craftsman-suite'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     className: "text-wp-primary hover:underline",
-    href: "https://wordpress.org/"
-  }, "WordPress"), ".")));
+    href: "https://github.com/calm-canvas/craftsman-suite"
+  }, "Documentation"), ".")));
 };
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('craftsman-suite-dev-tools-root');

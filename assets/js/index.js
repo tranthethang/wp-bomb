@@ -56,12 +56,12 @@ const App = () => {
 
 			<footer className="mt-12 pt-6 border-t border-wp-border flex justify-between items-center text-xs text-wp-sub">
 				<p>
-					{ __( 'Thank you for creating with ', 'craftsman-suite' ) }
+					{ __( 'Powered by passion and lots of coffee. ', 'craftsman-suite' ) }
 					<a
 						className="text-wp-primary hover:underline"
-						href="https://wordpress.org/"
+						href="https://github.com/calm-canvas/craftsman-suite"
 					>
-						WordPress
+						Documentation
 					</a>
 					.
 				</p>
