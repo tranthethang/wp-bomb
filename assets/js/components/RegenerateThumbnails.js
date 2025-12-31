@@ -27,6 +27,15 @@ const RegenerateThumbnails = () => {
 	const [isLoadingSizes, setIsLoadingSizes] = useState(true);
 	const [notice, setNotice] = useState(null);
 
+	useEffect(() => {
+		if (notice) {
+			const timer = setTimeout(() => {
+				setNotice(null);
+			}, 5000);
+			return () => clearTimeout(timer);
+		}
+	}, [notice]);
+
 	const [stats, setStats] = useState({
 		total: 0,
 		processed: 0,
@@ -131,13 +140,25 @@ const RegenerateThumbnails = () => {
 		if (currentIndex >= allIds.length) {
 			const endTime = Date.now();
 			const duration = Math.round((endTime - startTime) / 1000);
-			setStats((prev) => ({
-				...prev,
+			const finalStats = {
+				...stats,
 				duration,
 				pending: 0,
 				percentage: 100,
-			}));
+			};
+			setStats(finalStats);
 			setStatus('completed');
+			setNotice({
+				type: 'success',
+				message: sprintf(
+					__(
+						'Successfully regenerated thumbnails for %d images in %d seconds.',
+						'craftsman-suite'
+					),
+					currentStats.completed,
+					duration
+				),
+			});
 			return;
 		}
 
@@ -439,28 +460,6 @@ const RegenerateThumbnails = () => {
 							</div>
 						</div>
 					</div>
-
-					{isCompleted && (
-						<Notice status="success" isDismissible={false}>
-							{sprintf(
-								__(
-									'Successfully regenerated thumbnails for %d images in %d seconds.',
-									'craftsman-suite'
-								),
-								stats.completed,
-								stats.duration
-							)}
-						</Notice>
-					)}
-
-					{notice && (
-						<Notice
-							status={notice.type}
-							onRemove={() => setNotice(null)}
-						>
-							{notice.message}
-						</Notice>
-					)}
 				</CardBody>
 				<CardFooter className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
 					{isCompleted && (
@@ -508,6 +507,16 @@ const RegenerateThumbnails = () => {
 					)}
 				</p>
 			</div>
+
+			{notice && (
+				<Notice
+					status={notice.type}
+					onRemove={() => setNotice(null)}
+					className="mb-4"
+				>
+					{notice.message}
+				</Notice>
+			)}
 
 			{view === 'settings' ? renderSettings() : renderProgress()}
 		</div>

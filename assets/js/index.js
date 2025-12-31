@@ -60,7 +60,7 @@ const App = () => {
 						'Powered by passion and lots of coffee.',
 						'craftsman-suite'
 					)}
-					<a
+					&nbsp;<a
 						className="text-wp-primary hover:underline"
 						href="https://github.com/calm-canvas/craftsman-suite"
 					>

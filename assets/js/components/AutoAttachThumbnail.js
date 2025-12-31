@@ -17,6 +17,15 @@ const AutoAttachThumbnail = () => {
 	const [notice, setNotice] = useState(null);
 
 	useEffect(() => {
+		if (notice) {
+			const timer = setTimeout(() => {
+				setNotice(null);
+			}, 5000);
+			return () => clearTimeout(timer);
+		}
+	}, [notice]);
+
+	useEffect(() => {
 		fetchStats();
 	}, []);
 
