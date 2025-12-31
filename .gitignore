@@ -3,5 +3,8 @@ composer.lock
 node_modules/
 package-lock.json
 .idea/
+.vscode/
 .zencoder/
+.zenflow/
 specs/
+build/
