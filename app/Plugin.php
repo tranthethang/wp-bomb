@@ -51,68 +51,34 @@ class Plugin {
 			return;
 		}
 
+		$plugin_url  = \plugin_dir_url( WP_BOMB_PLUGIN_FILE );
+		$plugin_version = '1.2.0';
+
 		\wp_enqueue_script(
 			'tailwind-cdn',
-			'https://cdn.tailwindcss.com',
+			'https://cdn.tailwindcss.com?plugins=forms,typography',
 			array(),
 			'3.4.1',
 			false
 		);
 
-		\wp_add_inline_script(
-			'tailwind-cdn',
-			"tailwind.config = {
-				theme: {
-					extend: {
-						colors: {
-							wp: {
-								body: '#f0f0f1',
-								text: '#3c434a',
-								sub: '#646970',
-								primary: '#2271b1',
-								'primary-hover': '#135e96',
-								border: '#dcdcde',
-								surface: '#ffffff',
-								success: '#00a32a',
-								error: '#d63638',
-								warning: '#dba617',
-							}
-						},
-						fontFamily: {
-							sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '\"Segoe UI\"', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', '\"Helvetica Neue\"', 'sans-serif'],
-						},
-						boxShadow: {
-							'wp-card': '0 1px 1px rgba(0,0,0,.04)',
-						}
-					},
-				},
-			};"
-		);
-
 		\wp_enqueue_style(
-			'google-fonts-inter',
-			'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap',
+			'wp-bomb-dev-tools',
+			$plugin_url . 'assets/dist/css/dev-tools.min.css',
 			array(),
-			null
-		);
-
-		\wp_enqueue_style(
-			'material-symbols',
-			'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap',
-			array(),
-			null
+			$plugin_version
 		);
 
 		\wp_enqueue_script(
-			'wp-bomb-regenerate-thumbnails',
-			\plugin_dir_url( WP_BOMB_PLUGIN_FILE ) . 'assets/js/regenerate-thumbnails.js',
+			'wp-bomb-dev-tools',
+			$plugin_url . 'assets/dist/js/dev-tools.min.js',
 			array( 'wp-api-fetch', 'wp-element' ),
-			'1.2',
+			$plugin_version,
 			true
 		);
 
 		\wp_localize_script(
-			'wp-bomb-regenerate-thumbnails',
+			'wp-bomb-dev-tools',
 			'wpBombData',
 			array(
 				'nonce'      => \wp_create_nonce( 'wp_rest' ),
@@ -120,13 +86,6 @@ class Plugin {
 				'admin_url'  => \admin_url(),
 				'batch_size' => (int) \apply_filters( 'wpbomb_thumbnail_batch_size', 8 ),
 			)
-		);
-
-		\wp_enqueue_style(
-			'wp-bomb-regenerate-thumbnails',
-			\plugin_dir_url( WP_BOMB_PLUGIN_FILE ) . 'assets/css/regenerate-thumbnails.css',
-			array(),
-			'1.1'
 		);
 	}
 }

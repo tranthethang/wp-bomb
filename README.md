@@ -1,9 +1,6 @@
-![WP Bomb](./assets/repo.png)
-
 # WP Bomb
 
-A comprehensive WordPress utility plugin for developers. WP Bomb provides essential developer tools to automate common tasks directly from the WordPress admin panel.
-
+WP Bomb is a comprehensive WordPress utility plugin for developers that provides essential developer tools accessible from the WordPress admin panel. It automates common WordPress tasks including thumbnail attachment, thumbnail regeneration, and post field/meta cloning.
 ## Features
 
 - **Auto Attach Thumbnail**: Automatically attach thumbnails to posts or media items within a specified ID range

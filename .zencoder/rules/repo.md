@@ -3,11 +3,11 @@ description: Repository Information Overview
 alwaysApply: true
 ---
 
-# WP Bomb Plugin Information
+# Craftsman Suite Plugin Information
 
 ## Summary
 
-WP Bomb is a comprehensive WordPress utility plugin for developers that provides essential developer tools accessible from the WordPress admin panel. It automates common WordPress tasks including thumbnail attachment, thumbnail regeneration, and post field/meta cloning. Built with modern PHP using OOP architecture and PSR-4 autoloading.
+Craftsman Suite is a comprehensive WordPress utility plugin for developers that provides essential developer tools accessible from the WordPress admin panel. It automates common WordPress tasks including thumbnail attachment, thumbnail regeneration, and post field/meta cloning. Built with modern PHP using OOP architecture and PSR-4 autoloading.
 
 ## Structure
 
