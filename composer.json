@@ -15,5 +15,18 @@
     "psr-4": {
       "WpBomb\\": "app/"
     }
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "*"
+  },
+  "scripts": {
+    "format": "phpcs --standard=.phpcs.xml.dist --no-cache --extensions=php --parallel=8",
+    "fix": "phpcbf --standard=.phpcs.xml.dist --no-cache --extensions=php --parallel=8"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

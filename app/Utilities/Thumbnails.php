@@ -24,7 +24,7 @@ class Thumbnails {
 
 		$index = 0;
 
-		while ( $posts->have_posts() ):
+		while ( $posts->have_posts() ) :
 			$posts->the_post();
 
 			\set_post_thumbnail( \get_the_ID(), (int) $items[ $index ] );
@@ -32,7 +32,7 @@ class Thumbnails {
 			if ( $index == count( $items ) - 1 ) {
 				$index = 0;
 			} else {
-				$index++;
+				++$index;
 			}
 		endwhile;
 
@@ -159,7 +159,7 @@ class Thumbnails {
 			$new_metadata = \wp_generate_attachment_metadata( $attachment_id, $file );
 			if ( $new_metadata ) {
 				\wp_update_attachment_metadata( $attachment_id, $new_metadata );
-				$count++;
+				++$count;
 			}
 		}
 

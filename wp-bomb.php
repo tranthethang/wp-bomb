@@ -17,7 +17,7 @@
  * Text Domain: wp-bomb
  * Domain Path: /languages/
  *
- * @package WP Bomb 
+ * @package WP Bomb
  */
 
 use WpBomb\Plugin;

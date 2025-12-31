@@ -4,6 +4,7 @@ namespace WpBomb;
 
 use WpBomb\Admin\DevTools;
 use WpBomb\Api\RegenerateThumbnailsController;
+use WpBomb\Api\AutoAttachThumbnailController;
 
 class Plugin {
 	private static $instance = null;
@@ -26,7 +27,6 @@ class Plugin {
 
 	private function init_hooks() {
 		\add_action( 'admin_menu', array( $this, 'load_admin' ) );
-		\add_action( 'admin_init', array( $this, 'handle_admin_forms' ) );
 		\add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
@@ -35,15 +35,12 @@ class Plugin {
 		new DevTools();
 	}
 
-	public function handle_admin_forms() {
-		if ( isset( $_POST['bomb_execute_thumbs'] ) ) {
-			DevTools::process_auto_thumbs_form();
-		}
-	}
-
 	public function register_rest_routes() {
-		$controller = new RegenerateThumbnailsController();
-		$controller->register_routes();
+		$regen_controller = new RegenerateThumbnailsController();
+		$regen_controller->register_routes();
+
+		$auto_attach_controller = new AutoAttachThumbnailController();
+		$auto_attach_controller->register_routes();
 	}
 
 	public function enqueue_scripts( $hook ) {
@@ -51,29 +48,23 @@ class Plugin {
 			return;
 		}
 
-		$plugin_url  = \plugin_dir_url( WP_BOMB_PLUGIN_FILE );
-		$plugin_version = '1.2.0';
+		$plugin_url = \plugin_dir_url( WP_BOMB_PLUGIN_FILE );
 
-		\wp_enqueue_script(
-			'tailwind-cdn',
-			'https://cdn.tailwindcss.com?plugins=forms,typography',
-			array(),
-			'3.4.1',
-			false
-		);
+		// Use @wordpress/scripts build artifacts
+		$asset_file = include \plugin_dir_path( WP_BOMB_PLUGIN_FILE ) . 'build/index.asset.php';
 
 		\wp_enqueue_style(
 			'wp-bomb-dev-tools',
 			$plugin_url . 'assets/dist/css/dev-tools.min.css',
 			array(),
-			$plugin_version
+			$asset_file['version']
 		);
 
 		\wp_enqueue_script(
 			'wp-bomb-dev-tools',
-			$plugin_url . 'assets/dist/js/dev-tools.min.js',
-			array( 'wp-api-fetch', 'wp-element' ),
-			$plugin_version,
+			$plugin_url . 'build/index.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
 			true
 		);
 

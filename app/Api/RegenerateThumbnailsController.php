@@ -87,9 +87,9 @@ class RegenerateThumbnailsController {
 
 		return new \WP_REST_Response(
 			array(
-				'success'           => true,
-				'total'             => count( $attachments ),
-				'attachment_ids'    => $attachments,
+				'success'        => true,
+				'total'          => count( $attachments ),
+				'attachment_ids' => $attachments,
 			)
 		);
 	}

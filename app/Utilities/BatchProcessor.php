@@ -3,7 +3,7 @@
 namespace WpBomb\Utilities;
 
 class BatchProcessor {
-	private static $max_memory = 52428800;
+	private static $max_memory       = 52428800;
 	private static $memory_threshold = 0.9;
 
 	public static function process_batch( $attachment_ids ) {
@@ -12,15 +12,15 @@ class BatchProcessor {
 		foreach ( $attachment_ids as $attachment_id ) {
 			if ( static::is_memory_critical() ) {
 				$results[ $attachment_id ] = array(
-					'success'  => false,
-					'error'    => 'Memory limit approaching. Batch paused.',
-					'status'   => 'paused',
+					'success' => false,
+					'error'   => 'Memory limit approaching. Batch paused.',
+					'status'  => 'paused',
 				);
 				continue;
 			}
 
 			try {
-				$result                     = static::regenerate_single_attachment( $attachment_id );
+				$result                    = static::regenerate_single_attachment( $attachment_id );
 				$results[ $attachment_id ] = $result;
 			} catch ( \Exception $e ) {
 				$results[ $attachment_id ] = array(
@@ -48,7 +48,7 @@ class BatchProcessor {
 			}
 
 			try {
-				$result                     = static::regenerate_single_attachment( $attachment_id, $selected_sizes, $skip_existing );
+				$result                    = static::regenerate_single_attachment( $attachment_id, $selected_sizes, $skip_existing );
 				$results[ $attachment_id ] = $result;
 
 				static::clear_object_cache( $attachment_id );
@@ -84,7 +84,7 @@ class BatchProcessor {
 		}
 
 		// Filter sizes to generate
-		$filter_callback = function( $sizes ) use ( $selected_sizes, $skip_existing, $metadata, $file ) {
+		$filter_callback = function ( $sizes ) use ( $selected_sizes, $skip_existing, $metadata, $file ) {
 			$dir = dirname( $file );
 			foreach ( $sizes as $size => $data ) {
 				// If not in selected sizes, remove it

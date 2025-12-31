@@ -6,17 +6,23 @@
   "license": "GPL-3.0-or-later",
   "private": true,
   "scripts": {
-    "dev": "npm run dev:css & npm run dev:js",
+    "start": "wp-scripts start --webpack-src-dir=assets/js --webpack-copy-php",
+    "build": "wp-scripts build --webpack-src-dir=assets/js --webpack-copy-php",
+    "dev": "npm run dev:css & npm run start",
     "dev:css": "postcss assets/css/dev-tools.css -o assets/dist/css/dev-tools.min.css --watch",
-    "dev:js": "esbuild assets/js/dev-tools.js --bundle --format=iife --outfile=assets/dist/js/dev-tools.min.js --watch",
-    "build": "npm run build:css && npm run build:js",
+    "build:all": "npm run build:css && npm run build",
     "build:css": "postcss assets/css/dev-tools.css -o assets/dist/css/dev-tools.min.css",
-    "build:prod": "NODE_ENV=production npm run build:css && npm run build:js",
-    "build:js": "esbuild assets/js/dev-tools.js --bundle --format=iife --outfile=assets/dist/js/dev-tools.min.js --minify"
+    "lint:js": "eslint assets/js",
+    "lint:js:fix": "eslint assets/js --fix",
+    "format": "prettier --write \"assets/**/*.{js,css,scss}\""
   },
   "devDependencies": {
+    "@wordpress/eslint-plugin": "^16.0.0",
+    "@wordpress/prettier-config": "^3.0.0",
+    "@wordpress/scripts": "^27.0.0",
     "autoprefixer": "^10.4.16",
-    "esbuild": "^0.20.2",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
     "tailwindcss": "^3.4.1"
