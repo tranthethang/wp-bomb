@@ -1,7 +1,7 @@
 {
-  "name": "wp-bomb",
+  "name": "craftsman-suite",
   "version": "1.2.0",
-  "description": "Tons of utility for WordPress developers.",
+  "description": "Craftsman Suite is the ultimate developer's workbench for WordPress theme mastery. It streamlines your workflow by\nautomating tedious tasks: auto-attaching thumbnails, bulk regenerating images, and monitoring logs in real-time.\nDesigned for precision and efficiency, it lets you focus on crafting beautiful code while it handles the heavy lifting.",
   "author": "tranthethang",
   "license": "GPL-3.0-or-later",
   "private": true,
@@ -9,12 +9,13 @@
     "start": "wp-scripts start --webpack-src-dir=assets/js --webpack-copy-php",
     "build": "wp-scripts build --webpack-src-dir=assets/js --webpack-copy-php",
     "dev": "npm run dev:css & npm run start",
-    "dev:css": "postcss assets/css/dev-tools.css -o assets/dist/css/dev-tools.min.css --watch",
+    "dev:css": "postcss assets/css/style.css -o build/index.css --watch",
     "build:all": "npm run build:css && npm run build",
-    "build:css": "postcss assets/css/dev-tools.css -o assets/dist/css/dev-tools.min.css",
-    "lint:js": "eslint assets/js",
-    "lint:js:fix": "eslint assets/js --fix",
-    "format": "prettier --write \"assets/**/*.{js,css,scss}\""
+    "build:css": "postcss assets/css/style.css -o build/index.css",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js",
+    "lint:css": "wp-scripts lint-style",
+    "fix": "wp-scripts format && wp-scripts lint-js --fix && wp-scripts lint-style --fix"
   },
   "devDependencies": {
     "@wordpress/eslint-plugin": "^16.0.0",

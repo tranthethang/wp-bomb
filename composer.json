@@ -1,32 +1,32 @@
 {
-  "name": "tranthethang/wp-bomb",
-  "description": "Tons of utility for WordPress developers.",
-  "license": "GPL-3.0-or-later",
-  "authors": [
-    {
-      "name": "Tran The Thang",
-      "homepage": "https://github.com/tranthethang"
-    }
-  ],
-  "require": {
-    "php": ">=7.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "WpBomb\\": "app/"
-    }
-  },
-  "require-dev": {
-    "squizlabs/php_codesniffer": "*",
-    "wp-coding-standards/wpcs": "*"
-  },
-  "scripts": {
-    "format": "phpcs --standard=.phpcs.xml.dist --no-cache --extensions=php --parallel=8",
-    "fix": "phpcbf --standard=.phpcs.xml.dist --no-cache --extensions=php --parallel=8"
-  },
-  "config": {
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  }
+	"name": "tranthethang/craftsman-suite",
+	"description": "Tons of utility for WordPress developers.",
+	"license": "GPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "Tran The Thang",
+			"homepage": "https://github.com/tranthethang"
+		}
+	],
+	"require": {
+		"php": ">=7.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"CraftsmanSuite\\": "app/"
+		}
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "*",
+		"wp-coding-standards/wpcs": "*"
+	},
+	"scripts": {
+		"format": "phpcs --standard=.phpcs.xml.dist --no-cache --extensions=php --parallel=8",
+		"fix": "phpcbf --standard=.phpcs.xml.dist --no-cache --extensions=php --parallel=8"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace WpBomb\Admin;
+namespace CraftsmanSuite\Admin;
 
 class DevTools {
 	public function __construct() {
@@ -10,8 +10,8 @@ class DevTools {
 	private function register_menu() {
 		\add_submenu_page(
 			'tools.php',
-			'Dev Tools',
-			'Dev Tools',
+			'Craftsman Suite',
+			'Craftsman Suite',
 			'manage_options',
 			'bomb-dev-tools',
 			array( $this, 'render_page' )
@@ -23,7 +23,7 @@ class DevTools {
 			\wp_die( 'Unauthorized access' );
 		}
 		?>
-		<div id="wp-bomb-dev-tools-root"></div>
+		<div id="craftsman-suite-dev-tools-root"></div>
 		<?php
 	}
 }

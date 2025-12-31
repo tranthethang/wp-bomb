@@ -39,7 +39,7 @@ const AutoAttachThumbnail = () => {
   const fetchStats = async () => {
     try {
       const data = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
-        path: '/wpbomb/v1/auto-attach-thumbnail/stats'
+        path: '/craftsman-suite/v1/auto-attach-thumbnail/stats'
       });
       if (data.success) {
         setMinId(data.min_id);
@@ -53,14 +53,14 @@ const AutoAttachThumbnail = () => {
   };
   const handleExecute = async e => {
     e.preventDefault();
-    if (!confirm((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Are you sure you want to attach thumbnails? This will set thumbnails for posts based on the specified ID range.', 'wp-bomb'))) {
+    if (!confirm((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Are you sure you want to attach thumbnails? This will set thumbnails for posts based on the specified ID range.', 'craftsman-suite'))) {
       return;
     }
     setIsLoading(true);
     setNotice(null);
     try {
       const data = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
-        path: '/wpbomb/v1/auto-attach-thumbnail/execute',
+        path: '/craftsman-suite/v1/auto-attach-thumbnail/execute',
         method: 'POST',
         data: {
           min_id: parseInt(minId),
@@ -76,21 +76,21 @@ const AutoAttachThumbnail = () => {
     } catch (error) {
       setNotice({
         type: 'error',
-        message: error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('An error occurred during execution.', 'wp-bomb')
+        message: error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('An error occurred during execution.', 'craftsman-suite')
       });
     } finally {
       setIsLoading(false);
     }
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-bomb-module mb-8"
+    className: "craftsman-suite-module mb-8"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mb-6"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     className: "text-2xl font-medium text-gray-800 mb-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Auto Attach Thumbnail', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Auto Attach Thumbnail', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-[13px] text-wp-sub leading-relaxed max-w-4xl"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('This module scans posts within the specified ID range and automatically attaches the first image found in the content as the featured image (thumbnail) if one is not already set.', 'wp-bomb'))), notice && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('This module scans posts within the specified ID range and automatically attaches the first image found in the content as the featured image (thumbnail) if one is not already set.', 'craftsman-suite'))), notice && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
     status: notice.type,
     onRemove: () => setNotice(null),
     className: "mb-4"
@@ -106,21 +106,21 @@ const AutoAttachThumbnail = () => {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "space-y-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Min ID', 'wp-bomb'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Min ID', 'craftsman-suite'),
     type: "number",
     value: minId,
     onChange: value => setMinId(value),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Starting post ID for the operation.', 'wp-bomb'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Starting post ID for the operation.', 'craftsman-suite'),
     required: true,
     min: "0"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "space-y-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Max ID', 'wp-bomb'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Max ID', 'craftsman-suite'),
     type: "number",
     value: maxId,
     onChange: value => setMaxId(value),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Ending post ID for the operation.', 'wp-bomb'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Ending post ID for the operation.', 'craftsman-suite'),
     required: true,
     min: "0"
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -132,7 +132,7 @@ const AutoAttachThumbnail = () => {
     disabled: isLoading,
     icon: "controls-play",
     className: "flex items-center gap-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Execute', 'wp-bomb'))))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Execute', 'craftsman-suite'))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AutoAttachThumbnail);
 
@@ -197,7 +197,7 @@ const RegenerateThumbnails = () => {
   const fetchSizes = async () => {
     try {
       const response = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
-        path: '/wpbomb/v1/regenerate-thumbnails/sizes'
+        path: '/craftsman-suite/v1/regenerate-thumbnails/sizes'
       });
       if (isMountedRef.current && response.success) {
         setAvailableSizes(response.sizes);
@@ -219,7 +219,7 @@ const RegenerateThumbnails = () => {
     setNotice(null);
     try {
       const response = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
-        path: '/wpbomb/v1/regenerate-thumbnails/attachments'
+        path: '/craftsman-suite/v1/regenerate-thumbnails/attachments'
       });
       if (!isMountedRef.current) {
         return;
@@ -249,7 +249,7 @@ const RegenerateThumbnails = () => {
       setStatus('error');
       setNotice({
         type: 'error',
-        message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Failed to start the process.', 'wp-bomb')
+        message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Failed to start the process.', 'craftsman-suite')
       });
     }
   };
@@ -275,7 +275,7 @@ const RegenerateThumbnails = () => {
     const batchIds = allIds.slice(currentIndex, currentIndex + settings.batchSize);
     try {
       const response = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
-        path: '/wpbomb/v1/regenerate-thumbnails/batch-process',
+        path: '/craftsman-suite/v1/regenerate-thumbnails/batch-process',
         method: 'POST',
         data: {
           attachment_ids: batchIds,
@@ -326,7 +326,7 @@ const RegenerateThumbnails = () => {
       setStatus('error');
       setNotice({
         type: 'error',
-        message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Batch processing failed.', 'wp-bomb')
+        message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Batch processing failed.', 'craftsman-suite')
       });
     }
   };
@@ -359,9 +359,9 @@ const RegenerateThumbnails = () => {
     className: "md:col-span-1"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "text-sm font-semibold text-wp-heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Images per Batch', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Images per Batch', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-xs text-gray-500 mt-1 leading-relaxed"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The number of images processed in a single AJAX request.', 'wp-bomb'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The number of images processed in a single AJAX request.', 'craftsman-suite'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "md:col-span-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     value: settings.batchSize,
@@ -371,16 +371,16 @@ const RegenerateThumbnails = () => {
     }),
     min: 1,
     max: 50,
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Low (5-10) for shared hosting, High (20+) for dedicated servers.', 'wp-bomb')
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Low (5-10) for shared hosting, High (20+) for dedicated servers.', 'craftsman-suite')
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "grid grid-cols-1 md:grid-cols-3 gap-6 p-6 items-start"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "md:col-span-1"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "text-sm font-semibold text-wp-heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Target Thumbnail Sizes', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Target Thumbnail Sizes', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-xs text-gray-500 mt-1 leading-relaxed"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Select specific sizes to regenerate to save time and resources.', 'wp-bomb'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Select specific sizes to regenerate to save time and resources.', 'craftsman-suite'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "md:col-span-2 space-y-3"
   }, isLoadingSizes ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null) : Object.entries(availableSizes).map(([size, label]) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
     key: size,
@@ -399,11 +399,11 @@ const RegenerateThumbnails = () => {
     className: "md:col-span-1"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "text-sm font-semibold text-wp-heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Advanced Options', 'wp-bomb'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Advanced Options', 'craftsman-suite'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "md:col-span-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Skip existing correctly sized thumbnails', 'wp-bomb'),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Only regenerate if the file is missing or dimensions are incorrect.', 'wp-bomb'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Skip existing correctly sized thumbnails', 'craftsman-suite'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Only regenerate if the file is missing or dimensions are incorrect.', 'craftsman-suite'),
     checked: settings.skipExisting,
     onChange: checked => setSettings({
       ...settings,
@@ -415,7 +415,7 @@ const RegenerateThumbnails = () => {
     variant: "primary",
     onClick: handleStart,
     disabled: settings.selectedSizes.length === 0
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Start Regenerating Thumbnails', 'wp-bomb'))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Start Regenerating Thumbnails', 'craftsman-suite'))));
   const renderProgress = () => {
     const isCompleted = status === 'completed';
     const isStopped = status === 'stopped';
@@ -426,7 +426,7 @@ const RegenerateThumbnails = () => {
       className: "px-4 py-4 sm:px-6 border-b border-wp-border flex justify-between items-center bg-white"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
       className: "text-sm font-semibold text-gray-900"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Progress', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Progress', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${isCompleted ? 'bg-green-100 text-green-800' : isRunning ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}`
     }, status.charAt(0).toUpperCase() + status.slice(1))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, {
       className: "p-4 sm:p-6 space-y-6"
@@ -434,51 +434,51 @@ const RegenerateThumbnails = () => {
       className: "space-y-2"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex justify-between text-sm text-wp-sub mb-1"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Processing image ', 'wp-bomb'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.processed), " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)(' of ', 'wp-bomb'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.total)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Processing image ', 'craftsman-suite'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.processed), ' ', (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)(' of ', 'craftsman-suite'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.total)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "font-medium text-gray-800"
     }, stats.percentage, "%")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ProgressBar, {
       value: stats.percentage,
       className: "w-full"
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       className: "text-xs text-wp-sub italic mt-1"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Last processed: ', 'wp-bomb'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Last processed: ', 'craftsman-suite'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-gray-600"
-    }, lastProcessed || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Waiting…', 'wp-bomb')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, lastProcessed || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Waiting…', 'craftsman-suite')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "grid grid-cols-1 md:grid-cols-3 gap-4 py-2"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex flex-col border-l-4 border-green-500 bg-white pl-4 py-1"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-xs font-medium text-wp-sub uppercase tracking-wide"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Completed', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Completed', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex items-baseline mt-1"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-2xl font-semibold text-gray-900"
     }, stats.completed), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "ml-2 text-sm text-gray-500"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('items', 'wp-bomb')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('items', 'craftsman-suite')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex flex-col border-l-4 border-red-500 bg-white pl-4 py-1"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-xs font-medium text-wp-sub uppercase tracking-wide"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Failed', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Failed', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex items-baseline mt-1"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-2xl font-semibold text-gray-900"
     }, stats.failed), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "ml-2 text-sm text-gray-500"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('items', 'wp-bomb')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('items', 'craftsman-suite')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex flex-col border-l-4 border-orange-500 bg-white pl-4 py-1"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-xs font-medium text-wp-sub uppercase tracking-wide"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Pending', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Pending', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex items-baseline mt-1"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-2xl font-semibold text-gray-900"
     }, stats.pending), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "ml-2 text-sm text-gray-500"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('items', 'wp-bomb'))))), isCompleted && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('items', 'craftsman-suite'))))), isCompleted && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
       status: "success",
       isDismissible: false
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Successfully regenerated thumbnails for %d images in %d seconds.', 'wp-bomb'), stats.completed, stats.duration)), notice && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Successfully regenerated thumbnails for %d images in %d seconds.', 'craftsman-suite'), stats.completed, stats.duration)), notice && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
       status: notice.type,
       onRemove: () => setNotice(null)
     }, notice.message)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardFooter, {
@@ -486,26 +486,26 @@ const RegenerateThumbnails = () => {
     }, isCompleted && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
       variant: "primary",
       onClick: () => window.location.href = window.wpBombData.admin_url + 'upload.php'
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Return to Media Library', 'wp-bomb')), (isCompleted || isStopped) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Return to Media Library', 'craftsman-suite')), (isCompleted || isStopped) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
       variant: "secondary",
       onClick: handleStartOver
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Start Over', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Start Over', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex-grow"
     }), isRunning && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
       variant: "link",
       isDestructive: true,
       onClick: handleStop
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Stop Process', 'wp-bomb'))));
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Stop Process', 'craftsman-suite'))));
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-bomb-module mt-8"
+    className: "craftsman-suite-module mt-8"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mb-6"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     className: "text-2xl font-medium text-gray-800 mb-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Regenerate Thumbnails', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Regenerate Thumbnails', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-[13px] text-wp-sub leading-relaxed max-w-4xl"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('This tool regenerates thumbnails for all image attachments. This is useful if you have changed your theme or one of your thumbnail dimensions.', 'wp-bomb'))), view === 'settings' ? renderSettings() : renderProgress());
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('This tool regenerates thumbnails for all image attachments. This is useful if you have changed your theme or one of your thumbnail dimensions.', 'craftsman-suite'))), view === 'settings' ? renderSettings() : renderProgress());
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RegenerateThumbnails);
 
@@ -677,23 +677,23 @@ const App = () => {
     className: "mb-8"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
     className: "text-3xl font-normal text-wp-text mb-2"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Dev Tools', 'wp-bomb')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Craftsman Suite', 'craftsman-suite')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-sm text-wp-sub leading-relaxed max-w-3xl"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Utility tools for WordPress developers to automate common tasks and streamline workflow.', 'wp-bomb'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Utility tools for WordPress developers to automate common tasks and streamline workflow.', 'craftsman-suite'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "bg-wp-surface dark:bg-[#2c3338] border-l-4 border-wp-primary shadow-wp-card p-4 mb-8 flex items-start rounded-r-sm"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-info text-wp-primary mr-3 mt-0.5 flex-shrink-0"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "text-sm text-wp-text leading-relaxed"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Make sure to backup your database before running bulk operations.', 'wp-bomb')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_AutoAttachThumbnail__WEBPACK_IMPORTED_MODULE_2__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_RegenerateThumbnails__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("footer", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Make sure to backup your database before running bulk operations.', 'craftsman-suite')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_AutoAttachThumbnail__WEBPACK_IMPORTED_MODULE_2__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_RegenerateThumbnails__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("footer", {
     className: "mt-12 pt-6 border-t border-wp-border flex justify-between items-center text-xs text-wp-sub"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Thank you for creating with ', 'wp-bomb'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Thank you for creating with ', 'craftsman-suite'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     className: "text-wp-primary hover:underline",
     href: "https://wordpress.org/"
   }, "WordPress"), ".")));
 };
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('wp-bomb-dev-tools-root');
+  const root = document.getElementById('craftsman-suite-dev-tools-root');
   if (root) {
     (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.render)((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(App, null), root);
   }

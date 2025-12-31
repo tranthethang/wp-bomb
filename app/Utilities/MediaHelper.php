@@ -1,6 +1,6 @@
 <?php
 
-namespace WpBomb\Utilities;
+namespace CraftsmanSuite\Utilities;
 
 class MediaHelper {
 	public static function get_min_media_id() {

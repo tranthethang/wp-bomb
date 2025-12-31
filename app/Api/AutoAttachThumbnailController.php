@@ -1,14 +1,14 @@
 <?php
 
-namespace WpBomb\Api;
+namespace CraftsmanSuite\Api;
 
-use WpBomb\Utilities\Thumbnails;
-use WpBomb\Utilities\MediaHelper;
+use CraftsmanSuite\Utilities\Thumbnails;
+use CraftsmanSuite\Utilities\MediaHelper;
 
 class AutoAttachThumbnailController {
 	public function register_routes() {
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/auto-attach-thumbnail/execute',
 			array(
 				'methods'             => 'POST',
@@ -28,7 +28,7 @@ class AutoAttachThumbnailController {
 		);
 
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/auto-attach-thumbnail/stats',
 			array(
 				'methods'             => 'GET',

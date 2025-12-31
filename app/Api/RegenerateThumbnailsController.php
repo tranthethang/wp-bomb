@@ -1,13 +1,13 @@
 <?php
 
-namespace WpBomb\Api;
+namespace CraftsmanSuite\Api;
 
-use WpBomb\Utilities\BatchProcessor;
+use CraftsmanSuite\Utilities\BatchProcessor;
 
 class RegenerateThumbnailsController {
 	public function register_routes() {
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/regenerate-thumbnails/attachments',
 			array(
 				'methods'             => 'GET',
@@ -17,7 +17,7 @@ class RegenerateThumbnailsController {
 		);
 
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/regenerate-thumbnails/batch',
 			array(
 				'methods'             => 'POST',
@@ -33,7 +33,7 @@ class RegenerateThumbnailsController {
 		);
 
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/regenerate-thumbnails/batch-process',
 			array(
 				'methods'             => 'POST',
@@ -50,7 +50,7 @@ class RegenerateThumbnailsController {
 		);
 
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/regenerate-thumbnails/status',
 			array(
 				'methods'             => 'GET',
@@ -60,7 +60,7 @@ class RegenerateThumbnailsController {
 		);
 
 		\register_rest_route(
-			'wpbomb/v1',
+			'craftsman-suite/v1',
 			'/regenerate-thumbnails/sizes',
 			array(
 				'methods'             => 'GET',
@@ -177,7 +177,7 @@ class RegenerateThumbnailsController {
 	}
 
 	public function get_status() {
-		$transient = \get_transient( 'wpbomb_regen_status' );
+		$transient = \get_transient( 'craftsman-suite_regen_status' );
 
 		return new \WP_REST_Response(
 			array(

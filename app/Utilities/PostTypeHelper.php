@@ -1,6 +1,6 @@
 <?php
 
-namespace WpBomb\Utilities;
+namespace CraftsmanSuite\Utilities;
 
 class PostTypeHelper {
 	public static function get_types() {

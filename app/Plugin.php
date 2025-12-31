@@ -1,10 +1,10 @@
 <?php
 
-namespace WpBomb;
+namespace CraftsmanSuite;
 
-use WpBomb\Admin\DevTools;
-use WpBomb\Api\RegenerateThumbnailsController;
-use WpBomb\Api\AutoAttachThumbnailController;
+use CraftsmanSuite\Admin\DevTools;
+use CraftsmanSuite\Api\RegenerateThumbnailsController;
+use CraftsmanSuite\Api\AutoAttachThumbnailController;
 
 class Plugin {
 	private static $instance = null;
@@ -48,20 +48,20 @@ class Plugin {
 			return;
 		}
 
-		$plugin_url = \plugin_dir_url( WP_BOMB_PLUGIN_FILE );
+		$plugin_url = \plugin_dir_url( CRAFTSMAN_SUITE_PLUGIN_FILE );
 
 		// Use @wordpress/scripts build artifacts
-		$asset_file = include \plugin_dir_path( WP_BOMB_PLUGIN_FILE ) . 'build/index.asset.php';
+		$asset_file = include \plugin_dir_path( CRAFTSMAN_SUITE_PLUGIN_FILE ) . 'build/index.asset.php';
 
 		\wp_enqueue_style(
-			'wp-bomb-dev-tools',
-			$plugin_url . 'assets/dist/css/dev-tools.min.css',
+			'craftsman-suite-dev-tools',
+			$plugin_url . 'build/index.css',
 			array(),
 			$asset_file['version']
 		);
 
 		\wp_enqueue_script(
-			'wp-bomb-dev-tools',
+			'craftsman-suite-dev-tools',
 			$plugin_url . 'build/index.js',
 			$asset_file['dependencies'],
 			$asset_file['version'],
@@ -69,13 +69,13 @@ class Plugin {
 		);
 
 		\wp_localize_script(
-			'wp-bomb-dev-tools',
+			'craftsman-suite-dev-tools',
 			'wpBombData',
 			array(
 				'nonce'      => \wp_create_nonce( 'wp_rest' ),
 				'rest_url'   => \rest_url(),
 				'admin_url'  => \admin_url(),
-				'batch_size' => (int) \apply_filters( 'wpbomb_thumbnail_batch_size', 8 ),
+				'batch_size' => (int) \apply_filters( 'craftsman-suite_thumbnail_batch_size', 8 ),
 			)
 		);
 	}

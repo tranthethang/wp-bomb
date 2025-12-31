@@ -16,18 +16,18 @@ import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
 
 const RegenerateThumbnails = () => {
-	const [view, setView] = useState('settings');
-	const [status, setStatus] = useState('idle');
-	const [settings, setSettings] = useState({
+	const [ view, setView ] = useState( 'settings' );
+	const [ status, setStatus ] = useState( 'idle' );
+	const [ settings, setSettings ] = useState( {
 		batchSize: window.wpBombData?.batch_size || 10,
 		selectedSizes: [],
 		skipExisting: false,
-	});
-	const [availableSizes, setAvailableSizes] = useState({});
-	const [isLoadingSizes, setIsLoadingSizes] = useState(true);
-	const [notice, setNotice] = useState(null);
+	} );
+	const [ availableSizes, setAvailableSizes ] = useState( {} );
+	const [ isLoadingSizes, setIsLoadingSizes ] = useState( true );
+	const [ notice, setNotice ] = useState( null );
 
-	const [stats, setStats] = useState({
+	const [ stats, setStats ] = useState( {
 		total: 0,
 		processed: 0,
 		completed: 0,
@@ -36,56 +36,56 @@ const RegenerateThumbnails = () => {
 		percentage: 0,
 		startTime: null,
 		duration: 0,
-	});
+	} );
 
-	const [lastProcessed, setLastProcessed] = useState('');
-	const [attachmentIds, setAttachmentIds] = useState([]);
-	const isMountedRef = useRef(true);
-	const shouldStopRef = useRef(false);
+	const [ lastProcessed, setLastProcessed ] = useState( '' );
+	const [ attachmentIds, setAttachmentIds ] = useState( [] );
+	const isMountedRef = useRef( true );
+	const shouldStopRef = useRef( false );
 
-	useEffect(() => {
+	useEffect( () => {
 		fetchSizes();
 		return () => {
 			isMountedRef.current = false;
 		};
-	}, []);
+	}, [] );
 
 	const fetchSizes = async () => {
 		try {
-			const response = await apiFetch({
-				path: '/wpbomb/v1/regenerate-thumbnails/sizes',
-			});
-			if (isMountedRef.current && response.success) {
-				setAvailableSizes(response.sizes);
-				setSettings((prev) => ({
+			const response = await apiFetch( {
+				path: '/craftsman-suite/v1/regenerate-thumbnails/sizes',
+			} );
+			if ( isMountedRef.current && response.success ) {
+				setAvailableSizes( response.sizes );
+				setSettings( ( prev ) => ( {
 					...prev,
-					selectedSizes: Object.keys(response.sizes),
-				}));
+					selectedSizes: Object.keys( response.sizes ),
+				} ) );
 			}
-		} catch (error) {
-			console.error('Failed to fetch sizes', error);
+		} catch ( error ) {
+			console.error( 'Failed to fetch sizes', error );
 		} finally {
-			setIsLoadingSizes(false);
+			setIsLoadingSizes( false );
 		}
 	};
 
 	const handleStart = async () => {
 		shouldStopRef.current = false;
-		setStatus('loading');
-		setView('progress');
-		setNotice(null);
+		setStatus( 'loading' );
+		setView( 'progress' );
+		setNotice( null );
 
 		try {
-			const response = await apiFetch({
-				path: '/wpbomb/v1/regenerate-thumbnails/attachments',
-			});
-			if (!isMountedRef.current) {
+			const response = await apiFetch( {
+				path: '/craftsman-suite/v1/regenerate-thumbnails/attachments',
+			} );
+			if ( ! isMountedRef.current ) {
 				return;
 			}
 
-			if (response.success) {
+			if ( response.success ) {
 				const ids = response.attachment_ids;
-				setAttachmentIds(ids);
+				setAttachmentIds( ids );
 				const initialStats = {
 					total: response.total,
 					processed: 0,
@@ -96,8 +96,8 @@ const RegenerateThumbnails = () => {
 					startTime: Date.now(),
 					duration: 0,
 				};
-				setStats(initialStats);
-				setStatus('processing');
+				setStats( initialStats );
+				setStatus( 'processing' );
 				processBatches(
 					ids,
 					0,
@@ -105,13 +105,13 @@ const RegenerateThumbnails = () => {
 					initialStats.startTime
 				);
 			}
-		} catch (error) {
-			console.error('Failed to start process', error);
-			setStatus('error');
-			setNotice({
+		} catch ( error ) {
+			console.error( 'Failed to start process', error );
+			setStatus( 'error' );
+			setNotice( {
 				type: 'error',
-				message: __('Failed to start the process.', 'wp-bomb'),
-			});
+				message: __( 'Failed to start the process.', 'craftsman-suite' ),
+			} );
 		}
 	};
 
@@ -121,23 +121,23 @@ const RegenerateThumbnails = () => {
 		currentStats,
 		startTime
 	) => {
-		if (!isMountedRef.current || shouldStopRef.current) {
-			if (shouldStopRef.current) {
-				setStatus('stopped');
+		if ( ! isMountedRef.current || shouldStopRef.current ) {
+			if ( shouldStopRef.current ) {
+				setStatus( 'stopped' );
 			}
 			return;
 		}
 
-		if (currentIndex >= allIds.length) {
+		if ( currentIndex >= allIds.length ) {
 			const endTime = Date.now();
-			const duration = Math.round((endTime - startTime) / 1000);
-			setStats((prev) => ({
+			const duration = Math.round( ( endTime - startTime ) / 1000 );
+			setStats( ( prev ) => ( {
 				...prev,
 				duration,
 				pending: 0,
 				percentage: 100,
-			}));
-			setStatus('completed');
+			} ) );
+			setStatus( 'completed' );
 			return;
 		}
 
@@ -147,19 +147,19 @@ const RegenerateThumbnails = () => {
 		);
 
 		try {
-			const response = await apiFetch({
-				path: '/wpbomb/v1/regenerate-thumbnails/batch-process',
+			const response = await apiFetch( {
+				path: '/craftsman-suite/v1/regenerate-thumbnails/batch-process',
 				method: 'POST',
 				data: {
 					attachment_ids: batchIds,
 					selected_sizes: settings.selectedSizes,
 					skip_existing: settings.skipExisting,
 				},
-			});
+			} );
 
-			if (!isMountedRef.current || shouldStopRef.current) {
-				if (shouldStopRef.current) {
-					setStatus('stopped');
+			if ( ! isMountedRef.current || shouldStopRef.current ) {
+				if ( shouldStopRef.current ) {
+					setStatus( 'stopped' );
 				}
 				return;
 			}
@@ -169,33 +169,33 @@ const RegenerateThumbnails = () => {
 			let newFailed = currentStats.failed;
 			let lastFile = '';
 
-			Object.values(results).forEach((res) => {
-				if (res.success) {
+			Object.values( results ).forEach( ( res ) => {
+				if ( res.success ) {
 					newCompleted++;
 					lastFile = res.filename;
 				} else {
 					newFailed++;
 				}
-			});
+			} );
 
 			const processed = currentIndex + batchIds.length;
-			const percentage = Math.round((processed / allIds.length) * 100);
+			const percentage = Math.round( ( processed / allIds.length ) * 100 );
 
-			setStats((prev) => ({
+			setStats( ( prev ) => ( {
 				...prev,
 				processed,
 				completed: newCompleted,
 				failed: newFailed,
 				pending: allIds.length - processed,
 				percentage,
-			}));
+			} ) );
 
-			if (lastFile) {
-				setLastProcessed(lastFile);
+			if ( lastFile ) {
+				setLastProcessed( lastFile );
 			}
 
 			// Small delay to allow UI updates
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await new Promise( ( resolve ) => setTimeout( resolve, 50 ) );
 
 			processBatches(
 				allIds,
@@ -203,13 +203,13 @@ const RegenerateThumbnails = () => {
 				{ completed: newCompleted, failed: newFailed },
 				startTime
 			);
-		} catch (error) {
-			console.error('Batch failed', error);
-			setStatus('error');
-			setNotice({
+		} catch ( error ) {
+			console.error( 'Batch failed', error );
+			setStatus( 'error' );
+			setNotice( {
 				type: 'error',
-				message: __('Batch processing failed.', 'wp-bomb'),
-			});
+				message: __( 'Batch processing failed.', 'craftsman-suite' ),
+			} );
 		}
 	};
 
@@ -218,9 +218,9 @@ const RegenerateThumbnails = () => {
 	};
 
 	const handleStartOver = () => {
-		setView('settings');
-		setStatus('idle');
-		setStats({
+		setView( 'settings' );
+		setStatus( 'idle' );
+		setStats( {
 			total: 0,
 			processed: 0,
 			completed: 0,
@@ -229,9 +229,9 @@ const RegenerateThumbnails = () => {
 			percentage: 0,
 			startTime: null,
 			duration: 0,
-		});
-		setLastProcessed('');
-		setNotice(null);
+		} );
+		setLastProcessed( '' );
+		setNotice( null );
 	};
 
 	const renderSettings = () => (
@@ -240,27 +240,27 @@ const RegenerateThumbnails = () => {
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 items-start">
 					<div className="md:col-span-1">
 						<label className="text-sm font-semibold text-wp-heading">
-							{__('Images per Batch', 'wp-bomb')}
+							{ __( 'Images per Batch', 'craftsman-suite' ) }
 						</label>
 						<p className="text-xs text-gray-500 mt-1 leading-relaxed">
-							{__(
+							{ __(
 								'The number of images processed in a single AJAX request.',
-								'wp-bomb'
-							)}
+								'craftsman-suite'
+							) }
 						</p>
 					</div>
 					<div className="md:col-span-2">
 						<RangeControl
-							value={settings.batchSize}
-							onChange={(value) =>
-								setSettings({ ...settings, batchSize: value })
+							value={ settings.batchSize }
+							onChange={ ( value ) =>
+								setSettings( { ...settings, batchSize: value } )
 							}
-							min={1}
-							max={50}
-							help={__(
+							min={ 1 }
+							max={ 50 }
+							help={ __(
 								'Low (5-10) for shared hosting, High (20+) for dedicated servers.',
-								'wp-bomb'
-							)}
+								'craftsman-suite'
+							) }
 						/>
 					</div>
 				</div>
@@ -268,52 +268,55 @@ const RegenerateThumbnails = () => {
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 items-start">
 					<div className="md:col-span-1">
 						<label className="text-sm font-semibold text-wp-heading">
-							{__('Target Thumbnail Sizes', 'wp-bomb')}
+							{ __( 'Target Thumbnail Sizes', 'craftsman-suite' ) }
 						</label>
 						<p className="text-xs text-gray-500 mt-1 leading-relaxed">
-							{__(
+							{ __(
 								'Select specific sizes to regenerate to save time and resources.',
-								'wp-bomb'
-							)}
+								'craftsman-suite'
+							) }
 						</p>
 					</div>
 					<div className="md:col-span-2 space-y-3">
-						{isLoadingSizes ? (
+						{ isLoadingSizes ? (
 							<Spinner />
 						) : (
-							Object.entries(availableSizes).map(([size, label]) => (
+							Object.entries( availableSizes ).map( ( [ size, label ] ) => (
 								<CheckboxControl
-									key={size}
-									label={label}
-									checked={settings.selectedSizes.includes(size)}
-									onChange={(checked) => {
+									key={ size }
+									label={ label }
+									checked={ settings.selectedSizes.includes( size ) }
+									onChange={ ( checked ) => {
 										const newSelected = checked
-											? [...settings.selectedSizes, size]
-											: settings.selectedSizes.filter((s) => s !== size);
-										setSettings({ ...settings, selectedSizes: newSelected });
-									}}
+											? [ ...settings.selectedSizes, size ]
+											: settings.selectedSizes.filter( ( s ) => s !== size );
+										setSettings( { ...settings, selectedSizes: newSelected } );
+									} }
 								/>
-							))
-						)}
+							) )
+						) }
 					</div>
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 items-start">
 					<div className="md:col-span-1">
 						<label className="text-sm font-semibold text-wp-heading">
-							{__('Advanced Options', 'wp-bomb')}
+							{ __( 'Advanced Options', 'craftsman-suite' ) }
 						</label>
 					</div>
 					<div className="md:col-span-2">
 						<CheckboxControl
-							label={__('Skip existing correctly sized thumbnails', 'wp-bomb')}
-							help={__(
+							label={ __(
+								'Skip existing correctly sized thumbnails',
+								'craftsman-suite'
+							) }
+							help={ __(
 								'Only regenerate if the file is missing or dimensions are incorrect.',
-								'wp-bomb'
-							)}
-							checked={settings.skipExisting}
-							onChange={(checked) =>
-								setSettings({ ...settings, skipExisting: checked })
+								'craftsman-suite'
+							) }
+							checked={ settings.skipExisting }
+							onChange={ ( checked ) =>
+								setSettings( { ...settings, skipExisting: checked } )
 							}
 						/>
 					</div>
@@ -322,10 +325,10 @@ const RegenerateThumbnails = () => {
 			<div className="bg-gray-50 border-t border-wp-border px-6 py-4 flex items-center justify-end">
 				<Button
 					variant="primary"
-					onClick={handleStart}
-					disabled={settings.selectedSizes.length === 0}
+					onClick={ handleStart }
+					disabled={ settings.selectedSizes.length === 0 }
 				>
-					{__('Start Regenerating Thumbnails', 'wp-bomb')}
+					{ __( 'Start Regenerating Thumbnails', 'craftsman-suite' ) }
 				</Button>
 			</div>
 		</PanelBody>
@@ -340,37 +343,38 @@ const RegenerateThumbnails = () => {
 			<Card className="bg-wp-surface border border-wp-border shadow-wp-card sm:rounded-sm">
 				<CardHeader className="px-4 py-4 sm:px-6 border-b border-wp-border flex justify-between items-center bg-white">
 					<h3 className="text-sm font-semibold text-gray-900">
-						{__('Progress', 'wp-bomb')}
+						{ __( 'Progress', 'craftsman-suite' ) }
 					</h3>
 					<span
-						className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+						className={ `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
 							isCompleted
 								? 'bg-green-100 text-green-800'
 								: isRunning
 								? 'bg-blue-100 text-blue-800'
 								: 'bg-gray-100 text-gray-800'
-						}`}
+						}` }
 					>
-						{status.charAt(0).toUpperCase() + status.slice(1)}
+						{ status.charAt( 0 ).toUpperCase() + status.slice( 1 ) }
 					</span>
 				</CardHeader>
 				<CardBody className="p-4 sm:p-6 space-y-6">
 					<div className="space-y-2">
 						<div className="flex justify-between text-sm text-wp-sub mb-1">
 							<span>
-								{__('Processing image ', 'wp-bomb')}{' '}
-								<strong>{stats.processed}</strong> {__(' of ', 'wp-bomb')}{' '}
-								<strong>{stats.total}</strong>
+								{ __( 'Processing image ', 'craftsman-suite' ) }{ ' ' }
+								<strong>{ stats.processed }</strong>{ ' ' }
+								{ __( ' of ', 'craftsman-suite' ) }{ ' ' }
+								<strong>{ stats.total }</strong>
 							</span>
 							<span className="font-medium text-gray-800">
-								{stats.percentage}%
+								{ stats.percentage }%
 							</span>
 						</div>
-						<ProgressBar value={stats.percentage} className="w-full" />
+						<ProgressBar value={ stats.percentage } className="w-full" />
 						<p className="text-xs text-wp-sub italic mt-1">
-							{__('Last processed: ', 'wp-bomb')}{' '}
+							{ __( 'Last processed: ', 'craftsman-suite' ) }{ ' ' }
 							<span className="text-gray-600">
-								{lastProcessed || __('Waiting…', 'wp-bomb')}
+								{ lastProcessed || __( 'Waiting…', 'craftsman-suite' ) }
 							</span>
 						</p>
 					</div>
@@ -378,107 +382,107 @@ const RegenerateThumbnails = () => {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-2">
 						<div className="flex flex-col border-l-4 border-green-500 bg-white pl-4 py-1">
 							<span className="text-xs font-medium text-wp-sub uppercase tracking-wide">
-								{__('Completed', 'wp-bomb')}
+								{ __( 'Completed', 'craftsman-suite' ) }
 							</span>
 							<div className="flex items-baseline mt-1">
 								<span className="text-2xl font-semibold text-gray-900">
-									{stats.completed}
+									{ stats.completed }
 								</span>
 								<span className="ml-2 text-sm text-gray-500">
-									{__('items', 'wp-bomb')}
+									{ __( 'items', 'craftsman-suite' ) }
 								</span>
 							</div>
 						</div>
 						<div className="flex flex-col border-l-4 border-red-500 bg-white pl-4 py-1">
 							<span className="text-xs font-medium text-wp-sub uppercase tracking-wide">
-								{__('Failed', 'wp-bomb')}
+								{ __( 'Failed', 'craftsman-suite' ) }
 							</span>
 							<div className="flex items-baseline mt-1">
 								<span className="text-2xl font-semibold text-gray-900">
-									{stats.failed}
+									{ stats.failed }
 								</span>
 								<span className="ml-2 text-sm text-gray-500">
-									{__('items', 'wp-bomb')}
+									{ __( 'items', 'craftsman-suite' ) }
 								</span>
 							</div>
 						</div>
 						<div className="flex flex-col border-l-4 border-orange-500 bg-white pl-4 py-1">
 							<span className="text-xs font-medium text-wp-sub uppercase tracking-wide">
-								{__('Pending', 'wp-bomb')}
+								{ __( 'Pending', 'craftsman-suite' ) }
 							</span>
 							<div className="flex items-baseline mt-1">
 								<span className="text-2xl font-semibold text-gray-900">
-									{stats.pending}
+									{ stats.pending }
 								</span>
 								<span className="ml-2 text-sm text-gray-500">
-									{__('items', 'wp-bomb')}
+									{ __( 'items', 'craftsman-suite' ) }
 								</span>
 							</div>
 						</div>
 					</div>
 
-					{isCompleted && (
-						<Notice status="success" isDismissible={false}>
-							{sprintf(
+					{ isCompleted && (
+						<Notice status="success" isDismissible={ false }>
+							{ sprintf(
 								__(
 									'Successfully regenerated thumbnails for %d images in %d seconds.',
-									'wp-bomb'
+									'craftsman-suite'
 								),
 								stats.completed,
 								stats.duration
-							)}
+							) }
 						</Notice>
-					)}
+					) }
 
-					{notice && (
-						<Notice status={notice.type} onRemove={() => setNotice(null)}>
-							{notice.message}
+					{ notice && (
+						<Notice status={ notice.type } onRemove={ () => setNotice( null ) }>
+							{ notice.message }
 						</Notice>
-					)}
+					) }
 				</CardBody>
 				<CardFooter className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
-					{isCompleted && (
+					{ isCompleted && (
 						<Button
 							variant="primary"
-							onClick={() =>
-								(window.location.href =
-									window.wpBombData.admin_url + 'upload.php')
+							onClick={ () =>
+								( window.location.href =
+									window.wpBombData.admin_url + 'upload.php' )
 							}
 						>
-							{__('Return to Media Library', 'wp-bomb')}
+							{ __( 'Return to Media Library', 'craftsman-suite' ) }
 						</Button>
-					)}
-					{(isCompleted || isStopped) && (
-						<Button variant="secondary" onClick={handleStartOver}>
-							{__('Start Over', 'wp-bomb')}
+					) }
+					{ ( isCompleted || isStopped ) && (
+						<Button variant="secondary" onClick={ handleStartOver }>
+							{ __( 'Start Over', 'craftsman-suite' ) }
 						</Button>
-					)}
+					) }
 					<div className="flex-grow"></div>
-					{isRunning && (
-						<Button variant="link" isDestructive onClick={handleStop}>
-							{__('Stop Process', 'wp-bomb')}
+					{ isRunning && (
+						<Button variant="link" isDestructive onClick={ handleStop }>
+							{ __( 'Stop Process', 'craftsman-suite' ) }
 						</Button>
-					)}
+					) }
 				</CardFooter>
 			</Card>
 		);
 	};
 
 	return (
-		<div className="wp-bomb-module mt-8">
+		<div className="craftsman-suite-module mt-8">
 			<div className="mb-6">
 				<h2 className="text-2xl font-medium text-gray-800 mb-2">
-					{__('Regenerate Thumbnails', 'wp-bomb')}
+					{ __( 'Regenerate Thumbnails', 'craftsman-suite' ) }
 				</h2>
 				<p className="text-[13px] text-wp-sub leading-relaxed max-w-4xl">
-					{__(
+					{ __(
 						'This tool regenerates thumbnails for all image attachments. This is useful if you have changed your theme or one of your thumbnail dimensions.',
-						'wp-bomb'
-					)}
+						'craftsman-suite'
+					) }
 				</p>
 			</div>
 
-			{view === 'settings' ? renderSettings() : renderProgress()}
+			{ view === 'settings' ? renderSettings() : renderProgress() }
 		</div>
 	);
 };

@@ -1,40 +1,74 @@
-# WP Bomb
+# Craftsman Suite
 
-WP Bomb is a comprehensive WordPress utility plugin for developers that provides essential developer tools accessible from the WordPress admin panel. It automates common WordPress tasks including thumbnail attachment, thumbnail regeneration, and post field/meta cloning.
+Craftsman Suite is the ultimate developer's workbench for WordPress theme mastery. It streamlines your workflow by automating tedious tasks: auto-attaching thumbnails, bulk regenerating images, and monitoring logs in real-time.
+
+**Recently Refactored:** The plugin has been completely migrated to a modern **ReactJS** application, providing a seamless and responsive user interface within the WordPress admin dashboard.
+
 ## Features
 
-- **Auto Attach Thumbnail**: Automatically attach thumbnails to posts or media items within a specified ID range
-- **Developer Tools Dashboard**: Access all tools from **Tools → Dev Tools** menu in WordPress admin
-- **Built with Modern PHP**: Uses OOP architecture and PSR-4 autoloading for clean, maintainable code
+- **Modern React UI**: A completely rewritten user interface using ReactJS and Tailwind CSS for a fast, modern experience.
+- **Auto Attach Thumbnail**: Automatically attach thumbnails to posts or media items within a specified ID range.
+- **Regenerate Thumbnails**: Bulk regenerate thumbnails for your media library.
+- **Dark Mode Support**: Automatically adapts to your system's color scheme.
+- **Developer Tools Dashboard**: Access all tools from **Tools → Dev Tools** menu in WordPress admin.
+
+## Tech Stack
+
+- **Frontend**: ReactJS, Tailwind CSS, WordPress Element (@wordpress/element).
+- **Backend**: Modern PHP (OOP, PSR-4), WordPress REST API.
+- **Build Tools**: @wordpress/scripts, PostCSS.
 
 ## Requirements
 
-- WordPress 4.1 or higher
-- PHP 7.4 or higher
+- WordPress 5.0 or higher (Gutenberg support required for React components).
+- PHP 7.4 or higher.
 
 ## Installation
 
-1. Download the plugin
-2. Extract to `/wp-content/plugins/wp-bomb/`
-3. Activate the plugin from WordPress admin panel
+1. Download the plugin.
+2. Extract to `/wp-content/plugins/craftsman-suite/`.
+3. Activate the plugin from the WordPress admin panel.
+
+## Development Setup
+
+If you want to contribute or modify the plugin code, follow these steps:
+
+### Prerequisites
+- Node.js & npm
+- Composer
+
+### Setup
+1. Clone the repository.
+2. Install PHP dependencies:
+   ```bash
+   composer install
+   ```
+3. Install JavaScript dependencies:
+   ```bash
+   npm install
+   ```
+
+### Build Commands
+- **Start Development Server**:
+  ```bash
+  npm run start
+  ```
+  or
+  ```bash
+  npm run dev
+  ```
+- **Build for Production**:
+  ```bash
+  npm run build
+  ```
+- **Format Code**:
+  ```bash
+  npm run format
+  ```
 
 ## Usage
 
-Navigate to **Tools → Dev Tools** in your WordPress admin panel to access the developer tools.
-
-### Auto Attach Thumbnail
-
-Use this tool to automatically attach thumbnails to media items:
-
-1. Specify the Min ID and Max ID for the media range
-2. Click **Execute** to process
-3. The system will automatically attach thumbnails to media items within the specified range
-
-## Architecture
-
-- **PSR-4 Autoloading**: Clean namespace structure with `WpBomb\` prefix
-- **Object-Oriented Design**: Single instance pattern for plugin initialization
-- **Security**: Built-in nonce verification and capability checks
+Navigate to **Tools → Craftsman Suite** in your WordPress admin panel to access the developer tools interface.
 
 ## License
 
@@ -42,5 +76,4 @@ GNU General Public License v3 or later
 
 ## Author
 
-Tran The Thang - [GitHub Profile](https://github.com/tranthethang)
-
+tranthethang - [GitHub Profile](https://github.com/tranthethang)

@@ -53,12 +53,12 @@ input[type='number']:focus {
 	}
 }
 
-#wp-bomb-regenerate-thumbnails-root input[type='checkbox']:checked::before {
+#craftsman-suite-regenerate-thumbnails-root input[type='checkbox']:checked::before {
 	background-image: none !important;
 	background-color: transparent;
 }
 
-#wp-bomb-regenerate-thumbnails-root input[type='checkbox'] {
+#craftsman-suite-regenerate-thumbnails-root input[type='checkbox'] {
 	background-image: none !important;
 	background-color: transparent;
 	border: 1px solid var(--wp-border);
@@ -66,11 +66,11 @@ input[type='number']:focus {
 	vertical-align: middle;
 }
 
-#wp-bomb-regenerate-thumbnails-root input[type='checkbox']:checked {
+#craftsman-suite-regenerate-thumbnails-root input[type='checkbox']:checked {
 	background-image: none !important;
 }
 
-#wp-bomb-regenerate-thumbnails-root input[type='checkbox']:focus {
+#craftsman-suite-regenerate-thumbnails-root input[type='checkbox']:focus {
 	outline: 1px solid var(--wp-primary);
 	outline-offset: -1px;
 }

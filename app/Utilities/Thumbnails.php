@@ -1,6 +1,6 @@
 <?php
 
-namespace WpBomb\Utilities;
+namespace CraftsmanSuite\Utilities;
 
 class Thumbnails {
 	public static function auto_thumbs( $min = 0, $max = 0, $items = array(), $types = array( 'post' ) ) {

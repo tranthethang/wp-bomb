@@ -11,7 +11,7 @@ Craftsman Suite is a comprehensive WordPress utility plugin for developers that 
 
 ## Structure
 
-- **`wp-bomb.php`**: Main plugin entry point with plugin headers and initialization
+- **`craftsman-suite.php`**: Main plugin entry point with plugin headers and initialization
 - **`app/Plugin.php`**: Core plugin class using singleton pattern
 - **`app/Admin/DevTools.php`**: Admin menu registration and form rendering for developer tools
 - **`app/Utilities/`**: Helper classes for media, thumbnails, and post operations
@@ -40,15 +40,15 @@ Craftsman Suite is a comprehensive WordPress utility plugin for developers that 
 ## Installation & Setup
 
 ```bash
-# Extract to /wp-content/plugins/wp-bomb/
+# Extract to /wp-content/plugins/craftsman-suite/
 # Activate from WordPress admin panel
 ```
 
-**Autoloading**: PSR-4 autoloading configured in `composer.json` with namespace `WpBomb\` mapped to `app/` directory. If vendor directory exists, it's automatically loaded by the plugin.
+**Autoloading**: PSR-4 autoloading configured in `composer.json` with namespace `CraftsmanSuite\` mapped to `app/` directory. If vendor directory exists, it's automatically loaded by the plugin.
 
 ## Main Entry Point
 
-**Plugin File**: `wp-bomb.php` (wp-bomb.php:1-30)
+**Plugin File**: `craftsman-suite.php` (craftsman-suite.php:1-30)
 - Loads Composer autoloader if available
 - Initializes plugin via `Plugin::get_instance()` singleton
 

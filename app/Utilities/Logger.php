@@ -1,6 +1,6 @@
 <?php
 
-namespace WpBomb\Utilities;
+namespace CraftsmanSuite\Utilities;
 
 class Logger {
 	public static function log( $log ) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WpBomb\Utilities;
+namespace CraftsmanSuite\Utilities;
 
 class BatchProcessor {
 	private static $max_memory       = 52428800;
