@@ -98,7 +98,7 @@ const AutoAttachThumbnail = () => {
     className: "bg-white border border-wp-border shadow-wp-card rounded-sm overflow-hidden p-0"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     onSubmit: handleExecute,
-    className: "p-6 md:p-8 space-y-6"
+    className: "p-6 space-y-6"
   }, isFetchingStats ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "flex justify-center py-4"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null)) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -124,7 +124,7 @@ const AutoAttachThumbnail = () => {
     required: true,
     min: "0"
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "pt-4 flex items-center justify-end border-t border-wp-border"
+    className: "bg-gray-50 border-t border-wp-border px-6 py-4 flex items-center justify-end"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: "primary",
     type: "submit",

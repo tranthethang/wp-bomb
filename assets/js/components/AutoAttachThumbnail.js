@@ -106,7 +106,7 @@ const AutoAttachThumbnail = () => {
 			)}
 
 			<PanelBody className="bg-white border border-wp-border shadow-wp-card rounded-sm overflow-hidden p-0">
-				<form onSubmit={handleExecute} className="p-6 md:p-8 space-y-6">
+				<form onSubmit={handleExecute} className="p-6 space-y-6">
 					{isFetchingStats ? (
 						<div className="flex justify-center py-4">
 							<Spinner />
@@ -139,7 +139,7 @@ const AutoAttachThumbnail = () => {
 						</div>
 					)}
 
-					<div className="pt-4 flex items-center justify-end border-t border-wp-border">
+					<div className="bg-gray-50 border-t border-wp-border px-6 py-4 flex items-center justify-end">
 						<Button
 							variant="primary"
 							type="submit"
