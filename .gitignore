@@ -3,3 +3,4 @@ composer.lock
 .idea/
 .zencoder/
 .node-modules/
+specs/

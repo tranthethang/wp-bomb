@@ -58,6 +58,16 @@ class RegenerateThumbnailsController {
 				'permission_callback' => array( $this, 'check_permission' ),
 			)
 		);
+
+		\register_rest_route(
+			'wpbomb/v1',
+			'/regenerate-thumbnails/sizes',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_registered_sizes' ),
+				'permission_callback' => array( $this, 'check_permission' ),
+			)
+		);
 	}
 
 	public function check_permission() {
@@ -109,6 +119,8 @@ class RegenerateThumbnailsController {
 
 	public function process_batch_multiple( \WP_REST_Request $request ) {
 		$attachment_ids = $request->get_param( 'attachment_ids' );
+		$selected_sizes = $request->get_param( 'selected_sizes' );
+		$skip_existing  = $request->get_param( 'skip_existing' );
 
 		if ( ! is_array( $attachment_ids ) || empty( $attachment_ids ) ) {
 			return new \WP_REST_Response(
@@ -121,13 +133,45 @@ class RegenerateThumbnailsController {
 		}
 
 		$attachment_ids = array_filter( array_map( 'intval', $attachment_ids ) );
+		$selected_sizes = is_array( $selected_sizes ) ? array_filter( array_map( 'sanitize_text_field', $selected_sizes ) ) : array();
+		$skip_existing  = (bool) $skip_existing;
 
-		$results = BatchProcessor::process_batch_optimized( $attachment_ids );
+		$results = BatchProcessor::process_batch_optimized( $attachment_ids, $selected_sizes, $skip_existing );
 
 		return new \WP_REST_Response(
 			array(
 				'success' => true,
 				'results' => $results,
+			)
+		);
+	}
+
+	public function get_registered_sizes() {
+		$sizes            = \get_intermediate_image_sizes();
+		$additional_sizes = \wp_get_additional_image_sizes();
+		$result           = array();
+
+		foreach ( $sizes as $size ) {
+			if ( isset( $additional_sizes[ $size ] ) ) {
+				$width  = $additional_sizes[ $size ]['width'];
+				$height = $additional_sizes[ $size ]['height'];
+			} else {
+				$width  = \get_option( "{$size}_size_w" );
+				$height = \get_option( "{$size}_size_h" );
+			}
+
+			if ( $width == 0 && $height == 0 ) {
+				continue;
+			}
+
+			$label           = ucfirst( str_replace( array( '-', '_' ), ' ', $size ) );
+			$result[ $size ] = sprintf( '%s (%dx%d)', $label, $width, $height );
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'success' => true,
+				'sizes'   => $result,
 			)
 		);
 	}

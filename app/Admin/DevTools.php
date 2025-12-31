@@ -79,8 +79,6 @@ class DevTools {
 			</section>
 
 			<section class="bomb-section" style="margin-top: 20px;">
-				<h2>Regenerate Thumbnails</h2>
-				<p>Delete all cropped images and regenerate thumbnails for all image sizes with real-time progress tracking.</p>
 				<div id="wp-bomb-regenerate-thumbnails-root"></div>
 			</section>
 		</div>
