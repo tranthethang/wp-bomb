@@ -1,30 +1,35 @@
 {
-  "name": "craftsman-suite",
-  "version": "1.2.0",
-  "description": "Craftsman Suite is the ultimate developer's workbench for WordPress theme mastery. It streamlines your workflow by\nautomating tedious tasks: auto-attaching thumbnails, bulk regenerating images, and monitoring logs in real-time.\nDesigned for precision and efficiency, it lets you focus on crafting beautiful code while it handles the heavy lifting.",
-  "author": "tranthethang",
-  "license": "GPL-3.0-or-later",
-  "private": true,
-  "scripts": {
-    "build": "wp-scripts build --webpack-src-dir=assets/js --webpack-copy-php && postcss assets/css/style.css -o build/index.css",
-    "start": "wp-scripts start --webpack-src-dir=assets/js --webpack-copy-php & sleep 2 && postcss assets/css/style.css -o build/index.css --watch",
-    "format": "wp-scripts format && wp-scripts lint-js --fix && wp-scripts lint-style --fix"
-  },
-  "devDependencies": {
-    "@wordpress/scripts": "^27.0.0",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "postcss-cli": "^10.1.0",
-    "tailwindcss": "^3.4.1"
-  },
-  "prettier": "@wordpress/prettier-config",
-  "eslintConfig": {
-    "extends": [
-      "plugin:@wordpress/eslint-plugin/recommended"
-    ],
-    "env": {
-      "browser": true,
-      "jquery": true
-    }
-  }
+	"name": "craftsman-suite",
+	"version": "1.2.0",
+	"description": "Craftsman Suite is the ultimate developer's workbench for WordPress theme mastery. It streamlines your workflow by\nautomating tedious tasks: auto-attaching thumbnails, bulk regenerating images, and monitoring logs in real-time.\nDesigned for precision and efficiency, it lets you focus on crafting beautiful code while it handles the heavy lifting.",
+	"author": "tranthethang",
+	"license": "GPL-3.0-or-later",
+	"private": true,
+	"scripts": {
+		"build": "wp-scripts build --webpack-src-dir=assets/js --webpack-copy-php && postcss assets/css/style.css -o build/index.css",
+		"start": "wp-scripts start --webpack-src-dir=assets/js --webpack-copy-php & sleep 2 && postcss assets/css/style.css -o build/index.css --watch",
+		"format": "wp-scripts format && wp-scripts lint-js --fix && wp-scripts lint-style --fix"
+	},
+	"devDependencies": {
+		"@wordpress/api-fetch": "^7.37.0",
+		"@wordpress/components": "^31.0.0",
+		"@wordpress/element": "^6.37.0",
+		"@wordpress/eslint-plugin": "^23.0.0",
+		"@wordpress/i18n": "^6.10.0",
+		"@wordpress/scripts": "^27.0.0",
+		"autoprefixer": "^10.4.16",
+		"postcss": "^8.4.31",
+		"postcss-cli": "^10.1.0",
+		"tailwindcss": "^3.4.1"
+	},
+	"prettier": "@wordpress/prettier-config",
+	"eslintConfig": {
+		"extends": [
+			"plugin:@wordpress/eslint-plugin/recommended"
+		],
+		"env": {
+			"browser": true,
+			"jquery": true
+		}
+	}
 }

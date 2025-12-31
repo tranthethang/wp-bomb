@@ -4,38 +4,38 @@ import RegenerateThumbnails from './components/RegenerateThumbnails';
 import { __ } from '@wordpress/i18n';
 
 const App = () => {
-	useEffect( () => {
+	useEffect(() => {
 		const initDarkMode = () => {
 			if (
 				window.matchMedia &&
-				window.matchMedia( '(prefers-color-scheme: dark)' ).matches
+				window.matchMedia('(prefers-color-scheme: dark)').matches
 			) {
-				document.documentElement.classList.add( 'dark' );
+				document.documentElement.classList.add('dark');
 			}
 			window
-				.matchMedia( '(prefers-color-scheme: dark)' )
-				.addEventListener( 'change', ( event ) => {
-					if ( event.matches ) {
-						document.documentElement.classList.add( 'dark' );
+				.matchMedia('(prefers-color-scheme: dark)')
+				.addEventListener('change', (event) => {
+					if (event.matches) {
+						document.documentElement.classList.add('dark');
 					} else {
-						document.documentElement.classList.remove( 'dark' );
+						document.documentElement.classList.remove('dark');
 					}
-				} );
+				});
 		};
 		initDarkMode();
-	}, [] );
+	}, []);
 
 	return (
 		<div className="px-4 sm:px-8 lg:px-12 py-8 max-w-6xl mx-auto">
 			<header className="mb-8">
 				<h1 className="text-3xl font-normal text-wp-text mb-2">
-					{ __( 'Craftsman Suite', 'craftsman-suite' ) }
+					{__('Craftsman Suite', 'craftsman-suite')}
 				</h1>
 				<p className="text-sm text-wp-sub leading-relaxed max-w-3xl">
-					{ __(
+					{__(
 						'Utility tools for WordPress developers to automate common tasks and streamline workflow.',
 						'craftsman-suite'
-					) }
+					)}
 				</p>
 			</header>
 
@@ -43,10 +43,10 @@ const App = () => {
 				<span className="dashicons dashicons-info text-wp-primary mr-3 mt-0.5 flex-shrink-0"></span>
 				<div>
 					<p className="text-sm text-wp-text leading-relaxed">
-						{ __(
+						{__(
 							'Make sure to backup your database before running bulk operations.',
 							'craftsman-suite'
-						) }
+						)}
 					</p>
 				</div>
 			</div>
@@ -56,7 +56,10 @@ const App = () => {
 
 			<footer className="mt-12 pt-6 border-t border-wp-border flex justify-between items-center text-xs text-wp-sub">
 				<p>
-					{ __( 'Powered by passion and lots of coffee. ', 'craftsman-suite' ) }
+					{__(
+						'Powered by passion and lots of coffee.',
+						'craftsman-suite'
+					)}
 					<a
 						className="text-wp-primary hover:underline"
 						href="https://github.com/calm-canvas/craftsman-suite"
@@ -70,9 +73,9 @@ const App = () => {
 	);
 };
 
-document.addEventListener( 'DOMContentLoaded', () => {
-	const root = document.getElementById( 'craftsman-suite-dev-tools-root' );
-	if ( root ) {
-		render( <App />, root );
+document.addEventListener('DOMContentLoaded', () => {
+	const root = document.getElementById('craftsman-suite-dev-tools-root');
+	if (root) {
+		render(<App />, root);
 	}
-} );
+});

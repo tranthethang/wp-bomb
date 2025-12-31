@@ -1,8 +1,24 @@
 <?php
+/**
+ * Post Type Helper class file.
+ *
+ * @package CraftsmanSuite\Services
+ */
 
-namespace CraftsmanSuite\Utilities;
+namespace CraftsmanSuite\Services;
 
+/**
+ * Class PostTypeHelper
+ *
+ * Helper class for retrieving post types.
+ */
 class PostTypeHelper {
+
+	/**
+	 * Get list of supported post types.
+	 *
+	 * @return array List of post types.
+	 */
 	public static function get_types() {
 		$types   = array();
 		$types[] = 'post';

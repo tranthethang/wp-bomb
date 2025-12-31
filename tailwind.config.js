@@ -1,6 +1,6 @@
 module.exports = {
 	darkMode: 'class',
-	content: [ './app/**/*.php', './assets/**/*.js' ],
+	content: ['./app/**/*.php', './assets/**/*.js'],
 	theme: {
 		extend: {
 			colors: {

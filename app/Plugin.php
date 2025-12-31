@@ -1,4 +1,9 @@
 <?php
+/**
+ * Main Plugin Class
+ *
+ * @package CraftsmanSuite
+ */
 
 namespace CraftsmanSuite;
 
@@ -6,9 +11,22 @@ use CraftsmanSuite\Admin\DevTools;
 use CraftsmanSuite\Api\RegenerateThumbnailsController;
 use CraftsmanSuite\Api\AutoAttachThumbnailController;
 
+/**
+ * Class Plugin
+ */
 class Plugin {
+	/**
+	 * Instance of the class
+	 *
+	 * @var Plugin
+	 */
 	private static $instance = null;
 
+	/**
+	 * Get the singleton instance
+	 *
+	 * @return Plugin
+	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -16,25 +34,40 @@ class Plugin {
 		return self::$instance;
 	}
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->load_dependencies();
 		$this->init_hooks();
 	}
 
+	/**
+	 * Load dependencies
+	 */
 	private function load_dependencies() {
 		require_once \ABSPATH . 'wp-admin/includes/image.php';
 	}
 
+	/**
+	 * Initialize hooks
+	 */
 	private function init_hooks() {
 		\add_action( 'admin_menu', array( $this, 'load_admin' ) );
 		\add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
+	/**
+	 * Load admin pages
+	 */
 	public function load_admin() {
 		new DevTools();
 	}
 
+	/**
+	 * Register REST API routes
+	 */
 	public function register_rest_routes() {
 		$regen_controller = new RegenerateThumbnailsController();
 		$regen_controller->register_routes();
@@ -43,6 +76,11 @@ class Plugin {
 		$auto_attach_controller->register_routes();
 	}
 
+	/**
+	 * Enqueue scripts and styles
+	 *
+	 * @param string $hook The current admin page.
+	 */
 	public function enqueue_scripts( $hook ) {
 		if ( 'tools_page_craftsman-suite' !== $hook ) {
 			return;
@@ -50,7 +88,7 @@ class Plugin {
 
 		$plugin_url = \plugin_dir_url( CRAFTSMAN_SUITE_PLUGIN_FILE );
 
-		// Use @wordpress/scripts build artifacts
+		// Use @wordpress/scripts build artifacts.
 		$asset_file = include \plugin_dir_path( CRAFTSMAN_SUITE_PLUGIN_FILE ) . 'build/index.asset.php';
 
 		\wp_enqueue_style(
@@ -75,7 +113,7 @@ class Plugin {
 				'nonce'      => \wp_create_nonce( 'wp_rest' ),
 				'rest_url'   => \rest_url(),
 				'admin_url'  => \admin_url(),
-				'batch_size' => (int) \apply_filters( 'craftsman-suite_thumbnail_batch_size', 8 ),
+				'batch_size' => (int) \apply_filters( 'craftsman_suite_thumbnail_batch_size', 8 ),
 			)
 		);
 	}

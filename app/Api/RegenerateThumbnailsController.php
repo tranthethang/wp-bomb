@@ -1,10 +1,23 @@
 <?php
+/**
+ * Regenerate Thumbnails Controller
+ *
+ * @package CraftsmanSuite\Api
+ */
 
 namespace CraftsmanSuite\Api;
 
-use CraftsmanSuite\Utilities\BatchProcessor;
+use CraftsmanSuite\Services\BatchProcessor;
 
+/**
+ * Class RegenerateThumbnailsController
+ */
 class RegenerateThumbnailsController {
+	/**
+	 * Register REST API routes.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			'craftsman-suite/v1',
@@ -70,10 +83,20 @@ class RegenerateThumbnailsController {
 		);
 	}
 
+	/**
+	 * Check if user has permission to access the endpoints.
+	 *
+	 * @return bool
+	 */
 	public function check_permission() {
 		return \current_user_can( 'manage_options' );
 	}
 
+	/**
+	 * Get all attachment IDs.
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function get_all_attachments() {
 		$attachments = \get_posts(
 			array(
@@ -94,6 +117,12 @@ class RegenerateThumbnailsController {
 		);
 	}
 
+	/**
+	 * Process a single attachment.
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 * @return \WP_REST_Response
+	 */
 	public function process_batch( \WP_REST_Request $request ) {
 		$attachment_id = intval( $request->get_param( 'attachment_id' ) );
 
@@ -117,6 +146,12 @@ class RegenerateThumbnailsController {
 		);
 	}
 
+	/**
+	 * Process multiple attachments.
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 * @return \WP_REST_Response
+	 */
 	public function process_batch_multiple( \WP_REST_Request $request ) {
 		$attachment_ids = $request->get_param( 'attachment_ids' );
 		$selected_sizes = $request->get_param( 'selected_sizes' );
@@ -136,7 +171,7 @@ class RegenerateThumbnailsController {
 		$selected_sizes = is_array( $selected_sizes ) ? array_filter( array_map( 'sanitize_text_field', $selected_sizes ) ) : array();
 		$skip_existing  = (bool) $skip_existing;
 
-		$results = BatchProcessor::process_batch_optimized( $attachment_ids, $selected_sizes, $skip_existing );
+		$results = BatchProcessor::process_batch( $attachment_ids, $selected_sizes, $skip_existing );
 
 		return new \WP_REST_Response(
 			array(
@@ -146,6 +181,11 @@ class RegenerateThumbnailsController {
 		);
 	}
 
+	/**
+	 * Get registered image sizes.
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function get_registered_sizes() {
 		$sizes            = \get_intermediate_image_sizes();
 		$additional_sizes = \wp_get_additional_image_sizes();
@@ -160,7 +200,7 @@ class RegenerateThumbnailsController {
 				$height = \get_option( "{$size}_size_h" );
 			}
 
-			if ( $width == 0 && $height == 0 ) {
+			if ( 0 === (int) $width && 0 === (int) $height ) {
 				continue;
 			}
 
@@ -176,13 +216,18 @@ class RegenerateThumbnailsController {
 		);
 	}
 
+	/**
+	 * Get regeneration status.
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function get_status() {
 		$transient = \get_transient( 'craftsman-suite_regen_status' );
 
 		return new \WP_REST_Response(
 			array(
 				'success' => true,
-				'status'  => $transient ?: array(),
+				'status'  => ! empty( $transient ) ? $transient : array(),
 			)
 		);
 	}

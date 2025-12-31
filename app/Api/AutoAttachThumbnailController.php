@@ -1,11 +1,26 @@
 <?php
+/**
+ * AutoAttachThumbnailController file.
+ *
+ * @package CraftsmanSuite\Api
+ */
 
 namespace CraftsmanSuite\Api;
 
-use CraftsmanSuite\Utilities\Thumbnails;
-use CraftsmanSuite\Utilities\MediaHelper;
+use CraftsmanSuite\Services\Thumbnails;
+use CraftsmanSuite\Services\MediaHelper;
 
+/**
+ * Class AutoAttachThumbnailController
+ *
+ * Handles API requests for auto-attaching thumbnails.
+ */
 class AutoAttachThumbnailController {
+	/**
+	 * Register REST API routes.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			'craftsman-suite/v1',
@@ -38,10 +53,21 @@ class AutoAttachThumbnailController {
 		);
 	}
 
+	/**
+	 * Check if the user has permission to access the endpoints.
+	 *
+	 * @return bool True if the user has permission, false otherwise.
+	 */
 	public function check_permission() {
 		return \current_user_can( 'manage_options' );
 	}
 
+	/**
+	 * Execute the auto-attach thumbnail process.
+	 *
+	 * @param \WP_REST_Request $request The request object.
+	 * @return \WP_REST_Response The response object.
+	 */
 	public function execute( \WP_REST_Request $request ) {
 		$min_id = intval( $request->get_param( 'min_id' ) );
 		$max_id = intval( $request->get_param( 'max_id' ) );
@@ -75,6 +101,11 @@ class AutoAttachThumbnailController {
 		}
 	}
 
+	/**
+	 * Get statistics for the auto-attach thumbnail process.
+	 *
+	 * @return \WP_REST_Response The response object containing min and max media IDs.
+	 */
 	public function get_stats() {
 		return new \WP_REST_Response(
 			array(
