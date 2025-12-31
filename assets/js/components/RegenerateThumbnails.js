@@ -19,7 +19,7 @@ const RegenerateThumbnails = () => {
 	const [view, setView] = useState('settings');
 	const [status, setStatus] = useState('idle');
 	const [settings, setSettings] = useState({
-		batchSize: window.wpBombData?.batch_size || 10,
+		batchSize: Number(window.craftsmanSuiteData?.batch_size || 1),
 		selectedSizes: [],
 		skipExisting: false,
 	});
@@ -258,7 +258,7 @@ const RegenerateThumbnails = () => {
 							min={1}
 							max={50}
 							help={__(
-								'Low (5–10) for shared hosting, High (20+) for dedicated servers.',
+								'Low (1–10) for shared hosting, High (20+) for dedicated servers.',
 								'craftsman-suite'
 							)}
 						/>
@@ -468,7 +468,8 @@ const RegenerateThumbnails = () => {
 							variant="primary"
 							onClick={() =>
 								(window.location.href =
-									window.wpBombData.admin_url + 'upload.php')
+									window.craftsmanSuiteData.admin_url +
+									'upload.php')
 							}
 						>
 							{__('Return to Media Library', 'craftsman-suite')}

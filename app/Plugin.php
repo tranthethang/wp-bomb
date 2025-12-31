@@ -108,12 +108,12 @@ class Plugin {
 
 		\wp_localize_script(
 			'craftsman-suite-dev-tools',
-			'wpBombData',
+			'craftsmanSuiteData',
 			array(
 				'nonce'      => \wp_create_nonce( 'wp_rest' ),
 				'rest_url'   => \rest_url(),
 				'admin_url'  => \admin_url(),
-				'batch_size' => (int) \apply_filters( 'craftsman_suite_thumbnail_batch_size', 8 ),
+				'batch_size' => (int) \apply_filters( 'craftsman_suite_thumbnail_batch_size', 1 ),
 			)
 		);
 	}
