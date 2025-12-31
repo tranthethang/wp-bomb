@@ -44,7 +44,7 @@ class Plugin {
 	}
 
 	public function enqueue_scripts( $hook ) {
-		if ( 'tools_page_bomb-dev-tools' !== $hook ) {
+		if ( 'tools_page_craftsman-suite' !== $hook ) {
 			return;
 		}
 

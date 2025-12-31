@@ -13,7 +13,7 @@ class DevTools {
 			'Craftsman Suite',
 			'Craftsman Suite',
 			'manage_options',
-			'bomb-dev-tools',
+			'craftsman-suite',
 			array( $this, 'render_page' )
 		);
 	}
