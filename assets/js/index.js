@@ -4,53 +4,75 @@ import RegenerateThumbnails from './components/RegenerateThumbnails';
 import { __ } from '@wordpress/i18n';
 
 const App = () => {
-    useEffect(() => {
-        const initDarkMode = () => {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-            }
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-                if (event.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            });
-        };
-        initDarkMode();
-    }, []);
+	useEffect(() => {
+		const initDarkMode = () => {
+			if (
+				window.matchMedia &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches
+			) {
+				document.documentElement.classList.add('dark');
+			}
+			window
+				.matchMedia('(prefers-color-scheme: dark)')
+				.addEventListener('change', (event) => {
+					if (event.matches) {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+				});
+		};
+		initDarkMode();
+	}, []);
 
-    return (
-        <div className="px-4 sm:px-8 lg:px-12 py-8 max-w-6xl mx-auto">
-            <header className="mb-8">
-                <h1 className="text-3xl font-normal text-wp-text mb-2">{__('Dev Tools', 'wp-bomb')}</h1>
-                <p className="text-sm text-wp-sub leading-relaxed max-w-3xl">
-                    {__('Utility tools for WordPress developers to automate common tasks and streamline workflow.', 'wp-bomb')}
-                </p>
-            </header>
+	return (
+		<div className="px-4 sm:px-8 lg:px-12 py-8 max-w-6xl mx-auto">
+			<header className="mb-8">
+				<h1 className="text-3xl font-normal text-wp-text mb-2">
+					{__('Dev Tools', 'wp-bomb')}
+				</h1>
+				<p className="text-sm text-wp-sub leading-relaxed max-w-3xl">
+					{__(
+						'Utility tools for WordPress developers to automate common tasks and streamline workflow.',
+						'wp-bomb'
+					)}
+				</p>
+			</header>
 
-            <div className="bg-wp-surface dark:bg-[#2c3338] border-l-4 border-wp-primary shadow-wp-card p-4 mb-8 flex items-start rounded-r-sm">
-                <span className="dashicons dashicons-info text-wp-primary mr-3 mt-0.5 flex-shrink-0"></span>
-                <div>
-                    <p className="text-sm text-wp-text leading-relaxed">
-                        {__('Make sure to backup your database before running bulk operations.', 'wp-bomb')}
-                    </p>
-                </div>
-            </div>
+			<div className="bg-wp-surface dark:bg-[#2c3338] border-l-4 border-wp-primary shadow-wp-card p-4 mb-8 flex items-start rounded-r-sm">
+				<span className="dashicons dashicons-info text-wp-primary mr-3 mt-0.5 flex-shrink-0"></span>
+				<div>
+					<p className="text-sm text-wp-text leading-relaxed">
+						{__(
+							'Make sure to backup your database before running bulk operations.',
+							'wp-bomb'
+						)}
+					</p>
+				</div>
+			</div>
 
-            <AutoAttachThumbnail />
-            <RegenerateThumbnails />
+			<AutoAttachThumbnail />
+			<RegenerateThumbnails />
 
-            <footer className="mt-12 pt-6 border-t border-wp-border flex justify-between items-center text-xs text-wp-sub">
-                <p>{__('Thank you for creating with ', 'wp-bomb')}<a className="text-wp-primary hover:underline" href="https://wordpress.org/">WordPress</a>.</p>
-            </footer>
-        </div>
-    );
+			<footer className="mt-12 pt-6 border-t border-wp-border flex justify-between items-center text-xs text-wp-sub">
+				<p>
+					{__('Thank you for creating with ', 'wp-bomb')}
+					<a
+						className="text-wp-primary hover:underline"
+						href="https://wordpress.org/"
+					>
+						WordPress
+					</a>
+					.
+				</p>
+			</footer>
+		</div>
+	);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const root = document.getElementById('wp-bomb-dev-tools-root');
-    if (root) {
-        render(<App />, root);
-    }
+	const root = document.getElementById('wp-bomb-dev-tools-root');
+	if (root) {
+		render(<App />, root);
+	}
 });

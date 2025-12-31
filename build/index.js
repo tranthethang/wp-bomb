@@ -221,7 +221,9 @@ const RegenerateThumbnails = () => {
       const response = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
         path: '/wpbomb/v1/regenerate-thumbnails/attachments'
       });
-      if (!isMountedRef.current) return;
+      if (!isMountedRef.current) {
+        return;
+      }
       if (response.success) {
         const ids = response.attachment_ids;
         setAttachmentIds(ids);
@@ -253,7 +255,9 @@ const RegenerateThumbnails = () => {
   };
   const processBatches = async (allIds, currentIndex, currentStats, startTime) => {
     if (!isMountedRef.current || shouldStopRef.current) {
-      if (shouldStopRef.current) setStatus('stopped');
+      if (shouldStopRef.current) {
+        setStatus('stopped');
+      }
       return;
     }
     if (currentIndex >= allIds.length) {
@@ -280,7 +284,9 @@ const RegenerateThumbnails = () => {
         }
       });
       if (!isMountedRef.current || shouldStopRef.current) {
-        if (shouldStopRef.current) setStatus('stopped');
+        if (shouldStopRef.current) {
+          setStatus('stopped');
+        }
         return;
       }
       const results = response.results || {};
@@ -305,7 +311,9 @@ const RegenerateThumbnails = () => {
         pending: allIds.length - processed,
         percentage
       }));
-      if (lastFile) setLastProcessed(lastFile);
+      if (lastFile) {
+        setLastProcessed(lastFile);
+      }
 
       // Small delay to allow UI updates
       await new Promise(resolve => setTimeout(resolve, 50));
@@ -426,16 +434,16 @@ const RegenerateThumbnails = () => {
       className: "space-y-2"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex justify-between text-sm text-wp-sub mb-1"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Processing image ', 'wp-bomb'), " ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.processed), " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)(' of ', 'wp-bomb'), " ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.total)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Processing image ', 'wp-bomb'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.processed), " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)(' of ', 'wp-bomb'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, stats.total)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "font-medium text-gray-800"
     }, stats.percentage, "%")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ProgressBar, {
       value: stats.percentage,
       className: "w-full"
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       className: "text-xs text-wp-sub italic mt-1"
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Last processed: ', 'wp-bomb'), " ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Last processed: ', 'wp-bomb'), ' ', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: "text-gray-600"
-    }, lastProcessed || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Waiting...', 'wp-bomb')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, lastProcessed || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Waiting…', 'wp-bomb')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "grid grid-cols-1 md:grid-cols-3 gap-4 py-2"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "flex flex-col border-l-4 border-green-500 bg-white pl-4 py-1"
