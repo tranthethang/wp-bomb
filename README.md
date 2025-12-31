@@ -2,6 +2,8 @@
 
 Craftsman Suite is the ultimate developer's workbench for WordPress theme mastery. It streamlines your workflow by automating tedious tasks: auto-attaching thumbnails, bulk regenerating images, and monitoring logs in real-time.
 
+![Craftsman Suite](assets/repo.png)
+
 **Recently Refactored:** The plugin has been completely migrated to a modern **ReactJS** application, providing a seamless and responsive user interface within the WordPress admin dashboard.
 
 ## Features
